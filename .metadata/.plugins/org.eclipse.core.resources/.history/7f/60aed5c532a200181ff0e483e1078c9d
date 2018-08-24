@@ -1,0 +1,82 @@
+ <?php
+// require_once('includes/class-query.php');
+// require_once('includes/class-insert.php');
+
+// if(isset($_POST['submit']) && $_POST['submit'] == 'Login')
+// {
+// $update = $query->check_if_user_exist($_POST['email']);
+// $check = $query->check_password($_POST['email'],$_POST['password']);
+// if($update == "No user found" || $check == "No user found")
+// {
+// print_r($update);
+// header('refresh:2.5;url=login.php');
+// }
+// else
+// {
+// $insert->change_login_status($update->ID);
+// header('refresh:0.5;url=feed-view.php');
+// }
+// }
+// else if(isset($_POST['submit']) && $_POST['submit'] == 'Sign up')
+// header('refresh:0.5;url=register.php');
+// else
+// {
+
+
+
+?>
+
+
+<html>
+<title>Afeka Starter</title>
+<head>
+<link rel="stylesheet" type="text/css" href="styling.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src = "JS/loginScript.js"/></script>
+<script> 
+$('.loginForm').submit(function(event){
+    event.preventDefault();
+
+</script>
+
+</head>
+
+<body>
+
+	<div class="mainHeader">
+		<div class="logoName">
+			<p id="logo">Afeka-Starter</p>
+		</div>
+
+		<div class="loginDisp">
+			<div class="loginErrorMsg">
+				<p>The Email address or password is incorrect</p>
+			</div>
+
+			<div class="loginForm">
+				<form action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method = "post">	<!-- htmlspecialchars help to the url to be less exploitable  -->
+					<input id = "emailTxt" type = "text" name = "email" placeholder = "Email"/> 
+					<input id = "passTxt" type = "password" name = "password" placeholder = "Password" /> 
+					<input id = "loginBtn" type = "submit" name = "submit" value = "Login" onclick = "checkLoginData()"/> 
+					<input type = "submit" name = "submit" value = "Sign in" />
+				</form>
+			</div>
+
+
+		</div>
+	</div>
+
+
+	<!--	<iframe src=""></iframe> -->
+
+
+	<!--  creation of users table
+			CREATE TABLE `afeka-starter`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `password` VARCHAR NOT NULL , `email` VARCHAR NOT NULL , PRIMARY KEY (`id`)) ENGINE = MyISAM;
+		-->
+
+</body>
+</html>
+<?php
+// }
+// ?>

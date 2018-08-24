@@ -1,0 +1,26 @@
+<?php
+
+$db_link = mysqli_connect("localhost", "root", "", "afeka-starter");
+if (mysqli_connect_error())
+    die("ERROR IN DB!!!");
+
+if (isset($_POST['submit']) && $_POST['submit'] == 'Login') {
+    $emailFromUser = $_POST["email"];
+    // echo "the users email: ".$emailFromUser."</br>";
+    $emailVerificationQuery = "SELECT * FROM `users` where `email` = '" . $emailFromUser . "' LIMIT 1";
+    $result = mysqli_query($db_link, $emailVerificationQuery);
+    // echo "the result is: ";
+    print_r(mysqli_fetch_array($result));
+    // echo "</br>";
+    
+    /*
+     * if ($result)
+     * mysqli_fetch_array($result)[1];
+     * else
+     * echo "FUCK YOU!!!";
+     */
+}
+
+mysqli_close($db_link);
+
+?>

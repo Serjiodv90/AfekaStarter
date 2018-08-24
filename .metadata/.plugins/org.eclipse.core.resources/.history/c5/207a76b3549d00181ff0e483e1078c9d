@@ -1,0 +1,55 @@
+ <?php
+// require_once('includes/class-query.php');
+// require_once('includes/class-insert.php');
+
+// if(isset($_POST['submit']) && $_POST['submit'] == 'Login')
+// {
+// $update = $query->check_if_user_exist($_POST['email']);
+// $check = $query->check_password($_POST['email'],$_POST['password']);
+// if($update == "No user found" || $check == "No user found")
+// {
+// print_r($update);
+// header('refresh:2.5;url=login.php');
+// }
+// else
+// {
+// $insert->change_login_status($update->ID);
+// header('refresh:0.5;url=feed-view.php');
+// }
+// }
+// else if(isset($_POST['submit']) && $_POST['submit'] == 'Sign up')
+// header('refresh:0.5;url=register.php');
+// else
+// {
+// ?>
+<html>
+<title>Afeka Starter</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="StyleCss\styling.css">
+</head>
+
+<body>
+
+	<div class = "mainHeader">
+		<div class = "logoName">
+			<p>
+				Afeka Starter
+			</p>
+		</div>
+	
+	</div>
+<!-- 
+	<div class="form">
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+			<input type="text" name="email" placeholder="Email" /><br />
+			<br /> <input type="password" name="password" placeholder="Password" /><br />
+			<br /> <input type="submit" name="submit" value="Login" /><br />
+			<br /> <input type="submit" name="submit" value="Sign up" />
+		</form>
+	</div>
+	 -->
+</body>
+</html>
+	<?php
+// }
+// ?>

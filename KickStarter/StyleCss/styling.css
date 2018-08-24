@@ -1,0 +1,101 @@
+body{
+	margin: 0px;
+}
+
+.button{
+    /* border-style: inset; */
+    border-radius: 7px;
+    font-style: italic;
+    /* margin: auto; */
+    padding: 5px;
+    font-size: small;
+    border-style: hidden;
+    font-weight: 600;
+    color: #0000cc;
+    background-color: #ff9900;
+    letter-spacing: 1px;
+}
+
+.loginTextBoxes{
+	padding: 5px;
+    border-style: none;
+    border-radius: 5px;
+}
+
+#loginBtn
+{
+	margin-left: 10px;
+    margin-right: 2px;
+}
+.mainHeader {
+    position: relative;
+    display: flex;
+    padding-top: auto;
+    padding-bottom: auto;
+    width: 100%;
+    align-items: center;
+    height: 70px;
+	background-color: #2b2b63;
+    border-bottom: 5px solid black;
+}
+
+.logoName {
+       /* position: relative; */
+    /* left: 10; */
+    /* padding: 5px; */
+    display: inline-block;
+    margin-left: 18px;
+    /* bottom: 5; */
+    text-align: center;
+    /* margin-top: auto; */
+    /* margin-bottom: auto; */
+    max-width: 150px;
+}
+
+form{
+	margin: 0px;
+}
+
+#logo {
+      /* position: absolute; */
+    /* border-style: inset; */
+    border-radius: 10px;
+    font-style: italic;
+    /* margin: auto; */
+    font-weight: bold;
+    padding: 12px 12px;
+    color: #0000cc;
+    background-color: #ff9900;
+    letter-spacing: 2px;
+}
+
+.loginDisp {
+	position: absolute;
+    display: flex;
+    right: 20px;
+    align-items: center;
+    /* bottom: -10px; */
+    /* height: 100%; */
+}
+
+.loginErrorMsg {
+	display: none; /*inherit*/
+	float: left;
+	height: 0px;
+	color: red;
+	bottom: -3px;
+    font-size: 15px;
+    /* padding: 3px; */
+    position: relative;
+    font-style: italic;
+    font-family: sans-serif;
+}
+
+.loginErrorMsg p {
+	color: black;
+	font-weight: bold
+}
+
+.loginForm {
+	/*display: inline-flex;*/
+}
