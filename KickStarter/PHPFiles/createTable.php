@@ -78,8 +78,8 @@ session_start();
     
 
     //verify that tha DB exists
-    $conn = new mysqli($servername, $username, $password);
-    if($conn->select_db($dbname) === FALSE) {
+    $conn = @new mysqli($servername, $username, $password, $dbname);
+    if($conn->connect_error) {
         $conn = new mysqli($servername, $username, $password);
         $sql = "CREATE DATABASE ".$dbname;  //create database
         
@@ -108,16 +108,9 @@ session_start();
         `reg_date` TIMESTAMP
         )";
         
-    $msgToFront = Array ("val");
     if ($conn->query($sql) === TRUE) {
-        // echo "Table MyUsers created successfully";
-    $msgToFront["val"] = "true";
-        // echo json_encode($msgToFront);
         echo "true";
     } else {
-        // echo "Error creating table: " . $conn->error;
-        $msgToFront["val"] = "false";
-        // echo json_encode($msgToFront);
         echo "false";
     }
     
