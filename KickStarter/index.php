@@ -31,14 +31,15 @@
 
 <head>
 <link rel="stylesheet" type="text/css" href="StyleCss/styling.css">
+<!-- <link rel="stylesheet" type="text/css" href="StyleCss/reg.css"> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="JS/registration.js"></script>
 <script src = "JS/loginScript.js"></script>
 
 </head>
 
-<body>
+<body id = "mainPageBody">
 
 	<div class="mainHeader">
 		<div class="logoName">
@@ -51,7 +52,6 @@
 					<input class="loginTextBoxes" id = "emailTxt" type = "text" name = "email" placeholder = "Email"/> 
 					<input class="loginTextBoxes"  id = "passTxt" type = "password" name = "password" placeholder = "Password" /> 
 					<input class="button" id = "loginBtn" type = "button" name = "submit" value = "Login" onclick = "checkLoginData(event)"/> 
-					<input class="button" type = "button"  name = "submit" value = "Sign in" onclick = "goToReg()"/>
 				</form>
 
 				<div class="loginErrorMsg">
@@ -69,15 +69,28 @@
 
 	</div>
 
+	<div class="container">
+        <div class="main">
+            <form class="form" method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                <h2>Register to Afeka-Starter!</h2>
+                <label>Name : </label>  
+                <input class = "regTextBoxes" type="text" name="dname" id="name">
+                <label>Email : </label> 
+                <input class = "regTextBoxes" type="text" name="demail" id="email">
+                <label>Password :</label>
+                <input class = "regTextBoxes" type="password" name="password" id="password">
+                <label>Confirm Password :</label>
+                <input class = "regTextBoxes" type="password" name="cpassword" id="cpassword">
+                <input  class="button" id = "register" type="button" name="register" value="Register">
+            </form>
+    </div>
 	<div id = "projects" > </div>
-
 
 	<!--	<iframe src=""></iframe> -->
 
-
 	<!--  creation of users table
 			CREATE TABLE `afeka-starter`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `password` VARCHAR NOT NULL , `email` VARCHAR NOT NULL , PRIMARY KEY (`id`)) ENGINE = MyISAM;
-		-->
+		-->    
 
 </body>
 </html>

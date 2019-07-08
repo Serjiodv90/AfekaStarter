@@ -1,7 +1,14 @@
-body{
-	margin: 0px;
+#mainPageBody {  
+    padding: 0px;
+    background-color: #ddd;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
 }
 
+body {
+    margin: 0px;
+}
 .button{
     /* border-style: inset; */
     border-radius: 7px;
@@ -11,7 +18,7 @@ body{
     font-size: small;
     border-style: hidden;
     font-weight: 600;
-    color: #0000cc;
+    color: #2b2b63;
 /*    background-color: #ff9900;    */
     background: linear-gradient(#ffcc80 5%, #ff9900 100%);
     letter-spacing: 1px;
@@ -21,7 +28,7 @@ body{
 
 .button:hover{
     background: linear-gradient(#ff9900 5%, #ffcc80 100%);
-    }
+}
 
 .loginTextBoxes{
 	padding: 5px;
@@ -38,8 +45,8 @@ body{
 .mainHeader {
     position: relative;
     display: flex;
-    padding-top: auto;
-    padding-bottom: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
     width: 100%;
     align-items: center;
     height: 70px;
@@ -99,7 +106,7 @@ body{
     /* margin: auto; */
     font-weight: bold;
     padding: 12px 12px;
-    color: #0000cc;
+    color: #2b2b63;
     background-color: #ff9900;
     letter-spacing: 2px;
 }
@@ -158,7 +165,6 @@ margin-bottom: 30px;
 }
 
 div.container{
-width: 960px;
 height: 610px;
 margin:50px 35%;
 font-family: 'Droid Serif', serif;
@@ -171,7 +177,7 @@ div.main{
 width: 320px;
 float:left;
 padding: 10px 55px 40px;
-background-color: #0000cc;
+background-color: #2b2b63;
 border: 15px solid white;
 box-shadow: 0 0 10px;
 border-radius: 2px;
@@ -185,7 +191,7 @@ padding-left: 5px;
 margin-bottom: 20px;
 margin-top: 8px;
 box-shadow: 0 0 5px #ff9900;
-border: 2px solid #ff9900;
+border: 2px solid #ffcc80;
 color: #4f4f4f;
 font-size: 16px;
 }
@@ -205,8 +211,9 @@ margin-top: 15px;
 background: linear-gradient(#ffcc80 5%, #ff9900 100%);
 padding: 7px 35px;
 font-weight: bold;
-border-radius: 2px;
+border-radius: 10px;
 width: 100%;
+
 }
 
 #register:hover{

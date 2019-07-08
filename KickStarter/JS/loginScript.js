@@ -2,6 +2,18 @@
 //check if the user is logged in
 $(document).ready(function () {
 
+    $.post("/PHPFiles/createTable.php?function=createNewTable", "",
+    function (data, status) {
+        data = JSON.parse(JSON.stringify(data));
+
+        if (data == "true") {
+            alert("Table create successfully")
+        }
+        else {
+            alert("Table creation failed")
+        }
+    }, "json");  
+    
     //find out if there is logged in user
     $.post("/PHPFiles/login.php?function=isLogged", "",
         function (data, status) {
