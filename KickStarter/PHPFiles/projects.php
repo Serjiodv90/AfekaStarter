@@ -13,7 +13,7 @@ $sql = 'SELECT * FROM `projects`';
 $query = mysqli_query($db_link, $sql);
 
 if (!$query) {
-    die('SQL Error: ' . mysqli_error($conn));
+    die('SQL Error: ' . mysqli_error($db_link));
 }
 
 

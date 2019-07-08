@@ -2,10 +2,11 @@
 //check if the user is logged in
 $(document).ready(function () {
 
-    $.get("/PHPFiles/createTable.php?function=createUsersTable",
+    $.get("/PHPFiles/createTable.php",
     function (data, status) {
-        // data = JSON.parse(JSON.stringify(data));
-        data = data["val"];
+        data = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        // data = data["val"];
 
         if (data == "true") {
             alert("Table create successfully");
