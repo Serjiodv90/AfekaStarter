@@ -8,10 +8,10 @@ class Database {
     private $host = "localhost";
     private $userName = "root";
     private $password = "";
-    private $db_name = "afeka-starter";
+    private $db_name = "faceAfekaUsers";
 
     private function __construct() {
-        $this->connection = mysqli_connect("localhost", "root", "", "afeka-starter");
+        $this->connection = mysqli_connect("localhost", "root", "", "faceAfekaUsers");
     }
 
     function __destruct() {

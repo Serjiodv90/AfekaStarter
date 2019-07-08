@@ -2,17 +2,18 @@
 //check if the user is logged in
 $(document).ready(function () {
 
-    $.post("/PHPFiles/createTable.php?function=createNewTable", "",
+    $.get("/PHPFiles/createTable.php?function=createUsersTable",
     function (data, status) {
-        data = JSON.parse(JSON.stringify(data));
+        // data = JSON.parse(JSON.stringify(data));
+        data = data["val"];
 
         if (data == "true") {
-            alert("Table create successfully")
+            alert("Table create successfully");
         }
         else {
-            alert("Table creation failed")
+            alert("Table creation failed");
         }
-    }, "json");  
+    });  
     
     //find out if there is logged in user
     $.post("/PHPFiles/login.php?function=isLogged", "",

@@ -3,7 +3,7 @@
 session_start();
 require_once('DataBase.php');
 
-$db_link = mysqli_connect("localhost", "root", "", "afeka-starter");
+$db_link = mysqli_connect("localhost", "root", "", "faceAfekaUsers");
 // $db_link = DataBase::getConnection();
 
 $name = $_POST['name']; // Fetching Values from URL.

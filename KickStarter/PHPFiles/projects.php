@@ -3,7 +3,7 @@
 session_start();
 
     //set the connection
-$db_link = mysqli_connect("localhost", "root", "", "afeka-starter");
+$db_link = mysqli_connect("localhost", "root", "", "faceAfekaUsers");
 if (mysqli_connect_error()) {
     die("ERROR IN DB!!!");
 }
