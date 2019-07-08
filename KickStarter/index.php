@@ -22,20 +22,19 @@
 // else
 // {
 
-	session_start();
-	
-
-
+    session_start();
 ?>
 
 
 <html>
-<title>Afeka Starter</title>
+<title>FaceAfeka</title>
+
 <head>
 <link rel="stylesheet" type="text/css" href="StyleCss/styling.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src = "JS/loginScript.js"/></script>
+
+<script src = "JS/loginScript.js"></script>
 
 </head>
 
@@ -43,18 +42,16 @@
 
 	<div class="mainHeader">
 		<div class="logoName">
-			<p id="logo">Afeka-Starter</p>
+			<p id="logo">FaceAfeka</p>
 		</div>
 
 		<div class="loginDisp">
-			
-
 			<div class="loginForm">
-				<form   method = "post" >	<!-- htmlspecialchars help to the url to be less exploitable  -->
+				<form  id = "loginForm" method = "post" >	<!-- htmlspecialchars help to the url to be less exploitable  -->
 					<input class="loginTextBoxes" id = "emailTxt" type = "text" name = "email" placeholder = "Email"/> 
 					<input class="loginTextBoxes"  id = "passTxt" type = "password" name = "password" placeholder = "Password" /> 
 					<input class="button" id = "loginBtn" type = "button" name = "submit" value = "Login" onclick = "checkLoginData(event)"/> 
-					<input type = "submit" class="button" name = "submit" value = "Sign in" />
+					<input class="button" type = "button"  name = "submit" value = "Sign in" onclick = "goToReg()"/>
 				</form>
 
 				<div class="loginErrorMsg">
@@ -62,9 +59,17 @@
 				</div>
 			</div>
 
-
+			<div class = "loggedInUser"></div> 
 		</div>
+		
+		<div class = "logOut" >
+			<button class = "button" type = "button" name = "logOut" value = "Log Out" onclick = "logOut()">Log out</button>
+				
+		</div>
+
 	</div>
+
+	<div id = "projects" > </div>
 
 
 	<!--	<iframe src=""></iframe> -->
@@ -78,4 +83,4 @@
 </html>
 <?php
 // }
-// ?>
+//?>

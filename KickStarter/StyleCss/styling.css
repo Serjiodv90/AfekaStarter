@@ -12,9 +12,16 @@ body{
     border-style: hidden;
     font-weight: 600;
     color: #0000cc;
-    background-color: #ff9900;
+/*    background-color: #ff9900;    */
+    background: linear-gradient(#ffcc80 5%, #ff9900 100%);
     letter-spacing: 1px;
+    cursor: pointer;
+
 }
+
+.button:hover{
+    background: linear-gradient(#ff9900 5%, #ffcc80 100%);
+    }
 
 .loginTextBoxes{
 	padding: 5px;
@@ -27,6 +34,7 @@ body{
 	margin-left: 10px;
     margin-right: 2px;
 }
+
 .mainHeader {
     position: relative;
     display: flex;
@@ -52,7 +60,34 @@ body{
     max-width: 150px;
 }
 
-form{
+.loginDisp .loginForm{
+    display: flex;
+}
+
+.loginDisp .loggedInUser {
+    display: none;
+}
+
+.loggedInDisp .loginForm{
+    display: none;
+}
+
+.loggedInDisp .loggedInUser{
+    display: flex;
+}
+
+.loggedInUser{
+    position: absolute;
+    color: white;
+    right: 8px;
+    top: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    font-family: sans-serif;
+}
+
+#loginForm{
 	margin: 0px;
 }
 
@@ -91,11 +126,192 @@ form{
     font-family: sans-serif;
 }
 
-.loginErrorMsg p {
-	color: black;
-	font-weight: bold
+.logOut {
+    position: absolute;
+    display: none;
+    right: 20px;
+    bottom: 0px;
+    color: white;
 }
 
-.loginForm {
-	/*display: inline-flex;*/
+/*
+########################################################################
+Register page
+########################################################################
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+
+#regBody {
+    align-items: center;
+    align-self: center;
 }
+
+h2{
+text-align: center;
+font-size: 24px;
+color: white;
+}
+
+hr{
+margin-bottom: 30px;
+}
+
+div.container{
+width: 960px;
+height: 610px;
+margin:50px 35%;
+font-family: 'Droid Serif', serif;
+position:relative;
+align-items: center;
+align-self: center;
+}
+
+div.main{
+width: 320px;
+float:left;
+padding: 10px 55px 40px;
+background-color: #0000cc;
+border: 15px solid white;
+box-shadow: 0 0 10px;
+border-radius: 2px;
+font-size: 13px;
+}
+
+.regTextBoxes {
+width: 97.7%;
+height: 34px;
+padding-left: 5px;
+margin-bottom: 20px;
+margin-top: 8px;
+box-shadow: 0 0 5px #ff9900;
+border: 2px solid #ff9900;
+color: #4f4f4f;
+font-size: 16px;
+}
+
+label{
+color: #b3b3b3;
+text-shadow: 0 1px 0 #b3b3b3;
+font-size: 14px;
+font-weight: bold;
+letter-spacing: 1px;
+
+}
+
+#register {
+font-size: 20px;
+margin-top: 15px;
+background: linear-gradient(#ffcc80 5%, #ff9900 100%);
+padding: 7px 35px;
+font-weight: bold;
+border-radius: 2px;
+width: 100%;
+}
+
+#register:hover{
+    background: linear-gradient(#ff9900 5%, #ffcc80 100%);
+    }
+
+
+
+    /*
+    ########################################################################
+    projects list 
+    ########################################################################
+    */
+
+    table {
+        table-layout: inherit;
+        margin: 10px;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+        font-size: 12px;
+        width: 100%;
+        border-collapse: collapse;
+        
+    }
+
+    /* h1 {
+        margin: 25px auto 0;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 17px;
+    } */
+
+    table td {
+        text-align: left;
+        transition: all .5s;
+        border: 1px solid #ddd;
+        padding: 8px;
+        max-width:100%;
+        white-space: nowrap;
+
+    }
+
+    table tr td:nth-child(1)
+    {
+        display: flex;
+        width: 20%;
+    }
+
+    #projects
+    {
+        margin: 8px;
+        overflow-y: auto;
+        height: 100%;
+    }
+
+    #projectsTable
+    {
+        float: top;
+        vertical-align: middle;
+        height: 30%;
+    }
+
+    .projectsRow
+    {
+        border: 1px solid rgb(225, 200, 200);
+        display: flex;
+        float: none;
+    }
+
+    .projectsCell
+    {
+        display: flex;
+        float: left;
+        margin: 10px;
+        padding: 8px;
+        max-width: 20%;
+        align-content: center;  
+        border: 1px solid #ddd;
+    }
+
+    .projectDescription
+    {
+        display: flex;
+        float: left;
+        margin: 10px;
+        padding: 8px;
+        max-width: 60%;
+        height: 100%;
+        border: 1px solid #ddd;
+
+    }
+
+    .projDes
+    {
+        display: flex;
+        margin-top: auto;
+        margin-bottom: auto;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .projectsImgs
+    {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+
