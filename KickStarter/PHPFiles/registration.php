@@ -1,41 +1,57 @@
 <?php
 
 session_start();
-require_once('DataBase.php');
+require_once 'UsersTable.php';
 
-$db_link = mysqli_connect("localhost", "root", "", "faceAfekaUsers");
+// $db_link = mysqli_connect("localhost", "root", "", "faceAfekaUsers");
 // $db_link = DataBase::getConnection();
 
-$name = $_POST['name']; // Fetching Values from URL.
+echo ("in registration\n");
+
+// Fetching Values from POST Method.
+$name = $_POST['name']; 
 $email = $_POST['email'];
-$password = sha1($_POST['password']); // Password Encryption.
+$password = $_POST['password']; 
 
-// Check if e-mail address syntax is valid or not
-$email = filter_var($email, FILTER_SANITIZE_EMAIL); // Sanitizing email(Remove unexpected symbol like <,>,?,#,!, etc.)
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-}
- else {
-    $regVerifyQuery =  "SELECT * FROM `users` WHERE `email` = '$email'";
-    $result = mysqli_query($db_link, $regVerifyQuery);
-    $numOfRows = mysqli_num_rows($result);
+$usersDb = new UsersTable();
+$usersDb->insertUser($email, $name, $password);
 
-    if ($numOfRows == 0) {   // if the user doesn't registered already
+// echo("\nin registration:\nuser name: " . $name . "\nPassword: " . $password . "\nemail: " . $email);
+
+// // Check if e-mail address syntax is valid or not
+// $email = filter_var($email, FILTER_SANITIZE_EMAIL); // Sanitizing email(Remove unexpected symbol like <,>,?,#,!, etc.)
+// if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//     echo("Invalid email address");
+// }
+// else {
+//     // $usersTableName = UsersDataBase::getUsersTableName();
+
+//     $regVerifyQuery =  "SELECT * FROM MyUsers WHERE `email` = '$email'";
+//     $result = $usersDbLink->query($regVerifyQuery);//mysqli_query($usersDbLink, $regVerifyQuery);
+//     $numOfRows = $result->num_rows;//mysqli_num_rows($result);
+
+//     echo("in else: \nnum of row: " . $result->num_rows);
+
+//     if ($numOfRows == 0) {   // if the user doesn't registered already
          
-        $insertQuery = "INSERT INTO `users` (`password`, `email`, `name`) VALUES ('$password', '$email', '$name')";
-        $query = mysqli_query($db_link, $insertQuery); // Insert query
+//         $insertQuery = "INSERT INTO MyUsers (fullname, email, pass) VALUES ('$name', '$email', '$password')";
+//         echo("\ninsertQuery: " . $insertQuery);
+//         $query = $usersDbLink->query($insertQuery); // Insert query
 
-        if ($query) {
-            echo json_encode('ok');
-            $_SESSION["logged"] = "true";
-            $_SESSION["name"] = $name;
-        } else {
-            echo "Error!! ";
-        }
-    } else {
-        echo "This email is already registered, Please try another email";
-    }
-}
-mysqli_close($db_link);
+//         echo("\ninsertion query: " . $usersDbLink->error . "\n");
+
+//         if ($query === TRUE) {
+//             echo json_encode('ok');
+//             $_SESSION["logged"] = "true";
+//             $_SESSION["name"] = $name;
+//         } else {
+//             echo "Error!! ";
+//         }
+//     } else {
+//         echo "This email is already registered, Please try another email";
+//     }
+// }
+// mysqli_close($db_link);
 
 
 

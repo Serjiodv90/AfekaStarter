@@ -71,7 +71,7 @@
 
 	<div class="container">
         <div class="main">
-            <form class="form" method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+            <form class="form" method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>/PHPFiles/registration.php">
                 <h2>Register to Afeka-Starter!</h2>
                 <label>Name : </label>  
                 <input class = "regTextBoxes" type="text" name="dname" id="name">

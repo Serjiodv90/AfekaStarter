@@ -20,14 +20,14 @@ $(document).ready(function () {
             alert("Wrong email address");
         }
         else {
-            var masToBack = {email: email, password: password, name: name };
+            var masToBack = {'email': email, 'password': password, 'name': name };
             $.post("/PHPFiles/registration.php", masToBack, function (data) {
-                data = JSON.parse(JSON.stringify(data));
+                // data = JSON.parse(JSON.stringify(data));
                 if (data == "ok") {
                     $("form")[0].reset();
                     document.location.href  = "/index.php";
                 }
-            }, "json");
+            });
         }
     });
 });

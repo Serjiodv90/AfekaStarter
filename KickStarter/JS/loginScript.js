@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     $.get("/PHPFiles/createTable.php",
     function (data, status) {
-        data = JSON.parse(JSON.stringify(data));
+        // data = JSON.parse(JSON.stringify(data));
         console.log(data);
         // data = data["val"];
 
@@ -109,11 +109,7 @@ function showLoginErrorMsg() {
 
 
 
-//REGISTRATION
 
-function goToReg() {
-    document.location.href = "/html/reg.html";
-}
 
 function logOut() {
 
