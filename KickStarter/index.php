@@ -69,7 +69,9 @@
 
 	</div>
 
+
 	<div class="container">
+		<div class = "photobook">&nbsp;</div>
         <div class="main">
             <form class="form" method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>/PHPFiles/registration.php">
                 <h2>Register to Afeka-Starter!</h2>
@@ -82,15 +84,9 @@
                 <label>Confirm Password :</label>
                 <input class = "regTextBoxes" type="password" name="cpassword" id="cpassword">
                 <input  class="button" id = "register" type="button" name="register" value="Register">
-            </form>
-    </div>
-	<div id = "projects" > </div>
-
-	<!--	<iframe src=""></iframe> -->
-
-	<!--  creation of users table
-			CREATE TABLE `afeka-starter`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `password` VARCHAR NOT NULL , `email` VARCHAR NOT NULL , PRIMARY KEY (`id`)) ENGINE = MyISAM;
-		-->    
+			</form>
+		</div>
+	</div>
 
 </body>
 </html>

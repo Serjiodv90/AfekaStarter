@@ -6,7 +6,6 @@ $(document).ready(function () {
     function (data, status) {
         // data = JSON.parse(JSON.stringify(data));
         console.log(data);
-        // data = data["val"];
 
         if (data == "true") {
             alert("Table create successfully");
