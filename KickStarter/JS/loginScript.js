@@ -55,7 +55,7 @@ function checkLoginData(event) {
 
     else {
         var masToBack = { email: email, password: pass };
-        $.post("/PHPFiles/login.php?function=loginVerify", masToBack, verifyUserFromDB, "json");  //ajax connection to server
+        $.post("/PHPFiles/login.php?function=loginVerify", masToBack, verifyUserFromDB);  //ajax connection to server
         location.reload();
     }
 }

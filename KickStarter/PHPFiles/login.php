@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+include_once 'dataBaseConstants.php';
 
 
 
@@ -46,7 +47,8 @@ function loginVerify()
     $emailFromUser = $_POST["email"];
     $passwordFromUser = $_POST["password"];
     $passwordFromUser = sha1($passwordFromUser);
-    $emailVerificationQuery = "SELECT * FROM `users` where `email` = '" . $emailFromUser . "' LIMIT 1";
+    $usersTable = USERS_TABLE;
+    $emailVerificationQuery = "SELECT * FROM $usersTable where `email` = '" . $emailFromUser . "' LIMIT 1";
     $result = mysqli_query($db_link, $emailVerificationQuery);
 
     if ($result != "") {
