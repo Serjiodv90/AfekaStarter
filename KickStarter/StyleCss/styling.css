@@ -71,6 +71,7 @@ div.photobook {
 
 .loginDisp .loginForm{
     display: flex;
+    flex-direction: column;
 }
 
 .loginDisp .loggedInUser {

@@ -4,10 +4,10 @@
 <title>FaceAfeka</title>
 
 <head>
-<link rel="stylesheet" type="text/css" href="StyleCss/styling.css">
+<link rel="shortcut icon" type="image/png" href="/pics/facephoto.jpg"/>
+<link rel="stylesheet" type="text/css" href="/StyleCss/styling.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="JS/registration.js"></script>
-<script src = "JS/loginScript.js"></script>
+
 
 </head>
 
@@ -15,7 +15,7 @@
 
 	<div class="mainHeader">
 		<div class="logoName" >
-			<p id="logo"> <img src = "pics/facephoto.jpg" height="30" alt="London"> FaceAfeka</p>
+			<p id="logo"> <img src = "/pics/facephoto.jpg" height="30" alt="London"> FaceAfeka</p>
 		</div>
 
 		<div class="loginDisp">

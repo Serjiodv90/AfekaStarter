@@ -28,20 +28,20 @@ $(document).ready(function () {
             }
         }, "json");  //ajax connection to server
 
-        //get the projects list
-        $.get("/PHPFiles/projects.php",
-            function (data, status) {
-                data = JSON.parse(JSON.stringify(data));
+        // //get the projects list
+        // $.get("/PHPFiles/projects.php",
+        //     function (data, status) {
+        //         data = JSON.parse(JSON.stringify(data));
 
-                $('#projects').append(data);
-            }, "json");
+        //         $('#projects').append(data);
+        //     }, "json");
 
 });
 
 
 function checkLoginData(event) {
 
-    event.preventDefault();
+   // event.preventDefault();
 
 
     var email = $("#emailTxt").val();
@@ -51,12 +51,14 @@ function checkLoginData(event) {
 
     if (email == "" || pass == "" || !(emailReg.test(email))) {
         showLoginErrorMsg();
+        return false;
     }
 
     else {
+        return true;
         var masToBack = { email: email, password: pass };
         $.post("/PHPFiles/login.php?function=loginVerify", masToBack, verifyUserFromDB, "json");  //ajax connection to server
-        location.reload();
+        // location.reload();
     }
 }
 
@@ -66,7 +68,7 @@ function verifyUserFromDB(data, status) {
     console.log(data);
 
     if (data != "wrong user") {
-        var userName = data['name'];
+        var userName = data["name"];
 
         if (status == "success" && userName) {
             showLoggedInUser(userName);
@@ -81,11 +83,14 @@ function verifyUserFromDB(data, status) {
 }
 
 function showLoggedInUser(userName) {
-//    $(".loginForm").css("display", "none");
- //   $(".loginDisp").css("color", "white");
-    $(".loginDisp").attr('class', 'loggedInDisp');
-    $(".loggedInUser").text("Hello " + userName);
-    $(".logOut").css("display", "flex");
+    // $.get("/PHPFiles/login.php?function=redirectToWallPage",
+    // function (data, status) {
+        // document.write(data);
+        $(".loginDisp").attr('class', 'loggedInDisp');
+        $(".loggedInUser").text("Hello " + userName);
+        $(".logOut").css("display", "flex");
+    // });
+
 }
 
 function showLoginForm() {
@@ -103,7 +108,7 @@ function showLoginForm() {
 }
 
 function showLoginErrorMsg() {
-    $(".loginErrorMsg").css("display", "block");
+    $(".loginErrorMsg").css("display", "flex");
     // $(".loginTextBoxes").css("border", "2px solid red");
     $(".loginTextBoxes").css("background-color", "#ffb3b3");
 }

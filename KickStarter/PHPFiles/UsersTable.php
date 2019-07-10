@@ -30,7 +30,6 @@ class UsersTable {
             `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
 
-        echo ("creation sql: " . $sql);
             
         if ($this->_dbConnection->query($sql) === TRUE) {
             // return TRUE;
@@ -51,32 +50,24 @@ class UsersTable {
     public function insertUser($email, $userName, $password) {
         $password = sha1($password); // Password Encryption.
 
-        echo("\nin insertUser:\nuser name: " . $userName . "\nPassword: " . $password . "\nemail: " . $email);
-
         // Check if e-mail address syntax is valid or not
         $email = filter_var($email, FILTER_SANITIZE_EMAIL); // Sanitizing email(Remove unexpected symbol like <,>,?,#,!, etc.)
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo("Invalid email address");
         }
         else {
            
             $result = $this->getUserByEmail($email);
             $numOfRows = $result->num_rows;//mysqli_num_rows($result);
 
-            echo("in else: \nnum of row: " . $result->num_rows);
-
             if ($numOfRows == 0) {   // if the user doesn't registered already
                 
                 $insertQuery = "INSERT INTO $this->_usersTable (fullname, email, pass) VALUES ('$userName', '$email', '$password')";
-                echo("\ninsertQuery: " . $insertQuery);
                 $query = $this->_dbConnection->query($insertQuery); // Insert query
-
-                echo("\ninsertion query: " . $this->_dbConnection->error . "\n");
 
                 if ($query === TRUE) {
                     echo json_encode('ok');
-                    $_SESSION["logged"] = "true";
-                    $_SESSION["name"] = $userName;
+                    // $_SESSION["logged"] = "true";
+                    // $_SESSION["name"] = $userName;
                 } else {
                     echo "Error!! ";
                     }

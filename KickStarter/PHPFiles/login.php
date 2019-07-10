@@ -1,5 +1,7 @@
 <?php
 
+use function PHPSTORM_META\map;
+
 session_start();
 include_once 'dataBaseConstants.php';
 include_once 'UsersTable.php';
@@ -25,6 +27,9 @@ if (isset($_GET["function"]) and $_GET["function"] != "") {
         case 'logOut':
             logOut();
             break;
+        case 'redirectToWallPage':
+            redirectToWallPage();
+            break;
     }
 }
 
@@ -44,13 +49,11 @@ function logOut()
     session_unset();
     session_destroy();
     echo json_encode("success");
-    // header("refresh:0.5;url=index.php");
 }
 
 
 function loginVerify()
 {
-    echo json_encode("in loginVerify\n");
     $emailFromUser = $_POST["email"];
     $usersTableConn = new UsersTable();
     $result = $usersTableConn->getUserByEmail($emailFromUser);
@@ -63,10 +66,11 @@ function loginVerify()
         $row = $result->fetch_array(); //mysqli_fetch_array($result);
 
         if ((strcmp($emailFromUser, $row["email"]) == 0) and (strcmp($passwordFromUser, $row["pass"]) == 0)) {
-            echo json_encode($row);
+            // echo json_encode(array("name" => $row["fullname"]));
             $_SESSION["logged"] = true;
             $_SESSION["name"] = $row["fullname"];
             $_SESSION["id"] = $row["id"];
+            header("Location: facebookScreen.php");
         } else {
             echo json_encode("wrong user");
         }
@@ -75,4 +79,7 @@ function loginVerify()
     }
 }
 
-// mysqli_close($db_link);
+function redirectToWallPage()
+{
+    header("Location: facebookScreen.php");
+}

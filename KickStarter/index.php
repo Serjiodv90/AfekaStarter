@@ -22,7 +22,13 @@
 // else
 // {
 
-    session_start();
+	session_start();
+	if(isset($_SESSION["logged"]))
+	{
+		unset($_SESSION["logged"]);
+	}
+
+
 ?>
 
 
@@ -30,6 +36,7 @@
 <title>FaceAfeka</title>
 
 <head>
+<link rel="shortcut icon" type="image/png" href="pics/facephoto.jpg"/>
 <link rel="stylesheet" type="text/css" href="StyleCss/styling.css">
 <!-- <link rel="stylesheet" type="text/css" href="StyleCss/reg.css"> -->
 
@@ -48,10 +55,10 @@
 
 		<div class="loginDisp">
 			<div class="loginForm">
-				<form  id = "loginForm" method = "post" >	<!-- htmlspecialchars help to the url to be less exploitable  -->
+				<form  id = "loginForm" method = "post" action="/PHPFiles/login.php?function=loginVerify" onsubmit="return checkLoginData(event)">	<!-- htmlspecialchars help to the url to be less exploitable  -->
 					<input class="loginTextBoxes" id = "emailTxt" type = "text" name = "email" placeholder = "Email"/> 
 					<input class="loginTextBoxes"  id = "passTxt" type = "password" name = "password" placeholder = "Password" /> 
-					<input class="button" id = "loginBtn" type = "button" name = "submit" value = "Login" onclick = "checkLoginData(event)"/> 
+					<input class="button" id = "loginBtn" type = "submit" name = "submit" value = "Login" /> <!-- onclick = "checkLoginData(event)"-->
 				</form>
 
 				<div class="loginErrorMsg">
