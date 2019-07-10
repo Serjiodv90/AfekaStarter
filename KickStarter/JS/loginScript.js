@@ -16,7 +16,7 @@ $(document).ready(function () {
     });  
     
     //find out if there is logged in user
-    $.post("/PHPFiles/login.php?function=isLogged", "",
+    $.get("/PHPFiles/login.php?function=isLogged",
         function (data, status) {
             data = JSON.parse(JSON.stringify(data));
 
@@ -29,7 +29,7 @@ $(document).ready(function () {
         }, "json");  //ajax connection to server
 
         //get the projects list
-        $.post("/PHPFiles/projects.php", "", 
+        $.get("/PHPFiles/projects.php",
             function (data, status) {
                 data = JSON.parse(JSON.stringify(data));
 
@@ -55,14 +55,16 @@ function checkLoginData(event) {
 
     else {
         var masToBack = { email: email, password: pass };
-        $.post("/PHPFiles/login.php?function=loginVerify", masToBack, verifyUserFromDB);  //ajax connection to server
+        $.post("/PHPFiles/login.php?function=loginVerify", masToBack, verifyUserFromDB, "json");  //ajax connection to server
         location.reload();
     }
 }
 
 function verifyUserFromDB(data, status) {
     data = JSON.parse(JSON.stringify(data));
-    alert("in JS!");
+  //  alert("in JS!");
+    console.log(data);
+
     if (data != "wrong user") {
         var userName = data['name'];
 

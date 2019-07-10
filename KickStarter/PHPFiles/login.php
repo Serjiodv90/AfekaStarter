@@ -2,6 +2,7 @@
 
 session_start();
 include_once 'dataBaseConstants.php';
+include_once 'UsersTable.php';
 
 
 
@@ -15,24 +16,31 @@ if (mysqli_connect_error()) {
 // use different function in the php file
 if (isset($_GET["function"]) and $_GET["function"] != "") {
     switch ($_GET["function"]) {
-        case 'loginVerify': loginVerify(); break;
-        case 'isLogged' : isLogged(); break;
-        case 'logOut' : logOut(); break;
+        case 'loginVerify':
+            loginVerify();
+            break;
+        case 'isLogged':
+            isLogged();
+            break;
+        case 'logOut':
+            logOut();
+            break;
     }
 }
 
 
-function isLogged(){
-    if((isset($_SESSION["logged"])) and $_SESSION["logged"] == "true") {
-        $msgToFront = Array ("logged" => "true", "name" => $_SESSION["name"]);
+function isLogged()
+{
+    if ((isset($_SESSION["logged"])) and $_SESSION["logged"] == "true") {
+        $msgToFront = array("logged" => "true", "name" => $_SESSION["name"]);
         echo json_encode($msgToFront);
-    }
-    else {
+    } else {
         echo "User is not logged in";
     }
 }
 
-function logOut() {
+function logOut()
+{
     session_unset();
     session_destroy();
     echo json_encode("success");
@@ -42,26 +50,24 @@ function logOut() {
 
 function loginVerify()
 {
-    global $db_link;
-
+    echo json_encode("in loginVerify\n");
     $emailFromUser = $_POST["email"];
+    $usersTableConn = new UsersTable();
+    $result = $usersTableConn->getUserByEmail($emailFromUser);
+
+
     $passwordFromUser = $_POST["password"];
     $passwordFromUser = sha1($passwordFromUser);
-    $usersTable = USERS_TABLE;
-    $emailVerificationQuery = "SELECT * FROM $usersTable where `email` = '" . $emailFromUser . "' LIMIT 1";
-    $result = mysqli_query($db_link, $emailVerificationQuery);
 
-    if ($result != "") {
-        $row = mysqli_fetch_array($result);
-    
-        if ((strcmp($emailFromUser, $row["email"]) == 0) and (strcmp($passwordFromUser, $row["password"]) == 0)) {
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_array(); //mysqli_fetch_array($result);
+
+        if ((strcmp($emailFromUser, $row["email"]) == 0) and (strcmp($passwordFromUser, $row["pass"]) == 0)) {
             echo json_encode($row);
             $_SESSION["logged"] = true;
-            $_SESSION["name"] = $row["name"];
+            $_SESSION["name"] = $row["fullname"];
             $_SESSION["id"] = $row["id"];
-
-        }
-         else {
+        } else {
             echo json_encode("wrong user");
         }
     } else {
@@ -69,4 +75,4 @@ function loginVerify()
     }
 }
 
-mysqli_close($db_link);
+// mysqli_close($db_link);
