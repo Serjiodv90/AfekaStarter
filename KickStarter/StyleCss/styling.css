@@ -57,6 +57,7 @@ div.photobook {
     padding-bottom: 0px;
     width: 100%;
     align-items: center;
+    justify-content: space-between;
     height: 70px;
 	background-color: #2b2b63;
     border-bottom: 5px solid black;
@@ -90,7 +91,6 @@ div.photobook {
 
 
 .loggedInUser{
-    position: absolute;
     color: white;
     right: 8px;
     top: 18px;
@@ -100,6 +100,7 @@ div.photobook {
     font-family: sans-serif;
     display: flex;
     order: 1;
+    margin: 0 10px;
 
 }
 
@@ -132,7 +133,8 @@ img {
     justify-content: space-evenly;
     align-items: center;
     align-content: center;
-    right: 20px;
+    margin-right: 20px;
+
 }
 
 .loginErrorMsg {
@@ -148,7 +150,6 @@ img {
 }
 
 .logOut {
-    position: absolute;
     display: flex;
     order: 2;
     right: 20px;

@@ -6,13 +6,6 @@ include_once 'UsersTable.php';
 
 
 
-//set the connection
-$db_link = mysqli_connect("localhost", "root", "", "faceAfekaUsers");
-if (mysqli_connect_error()) {
-    die("ERROR IN DB!!!");
-}
-
-
 // use different function in the php file
 if (isset($_GET["function"]) and $_GET["function"] != "") {
     switch ($_GET["function"]) {
