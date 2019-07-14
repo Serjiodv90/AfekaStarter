@@ -49,6 +49,7 @@ class UsersTable {
 
     public function insertUser($email, $userName, $password) {
         $password = sha1($password); // Password Encryption.
+        $returnMsg = "";
 
         // Check if e-mail address syntax is valid or not
         $email = filter_var($email, FILTER_SANITIZE_EMAIL); // Sanitizing email(Remove unexpected symbol like <,>,?,#,!, etc.)
@@ -65,16 +66,22 @@ class UsersTable {
                 $query = $this->_dbConnection->query($insertQuery); // Insert query
 
                 if ($query === TRUE) {
-                    echo json_encode('ok');
-                    // $_SESSION["logged"] = "true";
-                    // $_SESSION["name"] = $userName;
+                    $returnMsg = "ok";
+                    // echo ('ok');
+                    $_SESSION["logged"] = "true";
+                    $_SESSION["name"] = $userName;
+                    $_SESSION["email"] = $email;
+                    $_SESSION["id"] = $this->_dbConnection->insert_id;  //get last inserted id
                 } else {
-                    echo "Error!! ";
+                    $returnMsg = "DB Error";
+                    // echo "Error!! ";
                     }
             } else {
-                echo "This email is already registered, Please try another email";
+                $returnMsg = "User exists";
+                // echo "This email is already registered, Please try another email";
                 }
         }       
+        return $returnMsg;
     }
 
 

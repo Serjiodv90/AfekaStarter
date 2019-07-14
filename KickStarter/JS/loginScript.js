@@ -26,16 +26,7 @@ $(document).ready(function () {
             else {
                 showLoginForm();
             }
-        }, "json");  //ajax connection to server
-
-        // //get the projects list
-        // $.get("/PHPFiles/projects.php",
-        //     function (data, status) {
-        //         data = JSON.parse(JSON.stringify(data));
-
-        //         $('#projects').append(data);
-        //     }, "json");
-
+        }, "json");  
 });
 
 

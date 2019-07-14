@@ -74,7 +74,7 @@ div.photobook {
     flex-direction: column;
 }
 
-.loginDisp .loggedInUser {
+/* .loginDisp .loggedInUser {
     display: none;
 }
 
@@ -84,7 +84,10 @@ div.photobook {
 
 .loggedInDisp .loggedInUser{
     display: flex;
-}
+} */
+
+
+
 
 .loggedInUser{
     position: absolute;
@@ -95,6 +98,9 @@ div.photobook {
     font-weight: bold;
     font-style: italic;
     font-family: sans-serif;
+    display: flex;
+    order: 1;
+
 }
 
 #loginForm{
@@ -120,10 +126,13 @@ img {
 }
 
 .loginDisp {
-	position: absolute;
+	/* position: absolute; */
     display: flex;
-    right: 20px;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
+    align-content: center;
+    right: 20px;
 }
 
 .loginErrorMsg {
@@ -140,7 +149,8 @@ img {
 
 .logOut {
     position: absolute;
-    display: none;
+    display: flex;
+    order: 2;
     right: 20px;
     bottom: 0px;
     color: white;

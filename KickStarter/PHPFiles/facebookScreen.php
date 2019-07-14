@@ -19,12 +19,17 @@
 		</div>
 
 		<div class="loginDisp">
-			<div class = "loggedInUser"></div> 
+			<div class = "loggedInUser">
+			<div>Hello <?php echo ($_SESSION["name"]); ?></div>
+			</div> 
+			
+			<div class = "logOut" >
+			<button class = "button" type = "button" name = "logOut" value = "Log Out" onclick = "logOut()">Log out</button>		
+			</div>
+
 		</div>
 		
-		<div class = "logOut" >
-			<button class = "button" type = "button" name = "logOut" value = "Log Out" onclick = "logOut()">Log out</button>		
-		</div>
+		
 	</div>
 
 

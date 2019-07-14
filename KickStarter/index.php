@@ -66,13 +66,13 @@
 				</div>
 			</div>
 
-			<div class = "loggedInUser"></div> 
+			<!-- <div class = "loggedInUser"></div>  -->
 		</div>
 		
-		<div class = "logOut" >
+		<!-- <div class = "logOut" >
 			<button class = "button" type = "button" name = "logOut" value = "Log Out" onclick = "logOut()">Log out</button>
 				
-		</div>
+		</div> -->
 
 	</div>
 
@@ -80,17 +80,17 @@
 	<div class="container">
 		<div class = "photobook">&nbsp;</div>
         <div class="main">
-            <form class="form" method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>/PHPFiles/registration.php">
-                <h2>Register to Afeka-Starter!</h2>
+            <form class="form" method="post" onsubmit="return validateReg()" action = "/PHPFiles/registration.php">
+                <h2>Register to FaceAfeka!</h2>
                 <label>Name : </label>  
-                <input class = "regTextBoxes" type="text" name="dname" id="name">
+                <input class = "regTextBoxes" type="text" name="name" id="name">
                 <label>Email : </label> 
-                <input class = "regTextBoxes" type="text" name="demail" id="email">
+                <input class = "regTextBoxes" type="text" name="email" id="email">
                 <label>Password :</label>
                 <input class = "regTextBoxes" type="password" name="password" id="password">
                 <label>Confirm Password :</label>
                 <input class = "regTextBoxes" type="password" name="cpassword" id="cpassword">
-                <input  class="button" id = "register" type="button" name="register" value="Register">
+                <input  class="button" id = "register" type="submit" name="register" value="Register">
 			</form>
 		</div>
 	</div>

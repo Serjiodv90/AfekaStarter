@@ -1,8 +1,6 @@
 <?php
 
-use function PHPSTORM_META\map;
-
-session_start();
+// session_start();
 include_once 'dataBaseConstants.php';
 include_once 'UsersTable.php';
 
