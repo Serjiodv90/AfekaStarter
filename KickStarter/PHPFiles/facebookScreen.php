@@ -7,6 +7,9 @@
 <link rel="shortcut icon" type="image/png" href="/pics/facephoto.jpg"/>
 <link rel="stylesheet" type="text/css" href="/StyleCss/styling.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src = "/JS/wallPageScript.js"></script>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
 </head>
@@ -32,9 +35,53 @@
 		
 	</div>
 
+	<div id="wall" >
+		<div id="statusField" class="postContainer">
+			<div class="statusFieldHead">
+				Share your thoughts:
+			</div>
+			<div class="postTextArea">
+				<textarea class="userStatusTA"  placeholder="What's on your mind, <?php echo ($_SESSION["name"]); ?>?"></textarea>
+			</div>
 
-	<div class="container">
+
+			<div class="postConrollers">
+				<button class="button addPicBtn" type="button" name="addPictureBtn" value="Add picture">Add picture</button>
+				<div id="privacyTgl">
+					<label style="margin: 0px 10px;">Go private:</label>
+					<input class="tgl tgl-flip" id="cb5" type="checkbox"/>
+					<label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
+				</div>
+				<button class="button" type="button" name="publishPostBtn" value="Publish post">Publish post</button>
+
+			</div>
+
+		</div>
+
+		<div id="posts">
+			<div class="singlePost">
+				<div class="statusFieldHead"> <?php echo ($_SESSION["name"]); ?>
+				</div>
+
+				<div class="postTextArea">
+					<div class="userStatusTA postContent">new Post hAHa</div>
+				</div>
+
+				<div class="postConrollers">
+					<div class="likeBtn" onclick="like();">
+						<img id="likeImg" src="/pics/like.png"/>	
+						<div class="likeDiv" style="height: 15px; width:40px;">Like</div>
+					</div>
+				</div>
+
+
+
+			</div>
+
+		</div>
+
 	</div>
+
 
 </body>
 </html>

@@ -37,9 +37,16 @@ function isLogged()
 
 function logOut()
 {
-    session_unset();
-    session_destroy();
-    echo json_encode("success");
+    if(isset($_SESSION["logged"]) and session_status() === PHP_SESSION_ACTIVE)
+    {
+        session_unset();
+        session_destroy();
+    }
+
+    $returnMsg = array();
+    $returnMsg['status'] = "success";
+    $returnMsg['page'] = '/index.php';
+    echo json_encode($returnMsg);
 }
 
 

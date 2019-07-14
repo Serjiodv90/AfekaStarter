@@ -47,31 +47,31 @@ function checkLoginData(event) {
 
     else {
         return true;
-        var masToBack = { email: email, password: pass };
-        $.post("/PHPFiles/login.php?function=loginVerify", masToBack, verifyUserFromDB, "json");  //ajax connection to server
+        // var masToBack = { email: email, password: pass };
+        // $.post("/PHPFiles/login.php?function=loginVerify", masToBack, verifyUserFromDB, "json");  //ajax connection to server
         // location.reload();
     }
 }
 
-function verifyUserFromDB(data, status) {
-    data = JSON.parse(JSON.stringify(data));
-  //  alert("in JS!");
-    console.log(data);
+// function verifyUserFromDB(data, status) {
+//     data = JSON.parse(JSON.stringify(data));
+//   //  alert("in JS!");
+//     console.log(data);
 
-    if (data != "wrong user") {
-        var userName = data["name"];
+//     if (data != "wrong user") {
+//         var userName = data["name"];
 
-        if (status == "success" && userName) {
-            showLoggedInUser(userName);
-        }
-        else {
-            showLoginErrorMsg();
-        }
-    }
-    else
-        showLoginErrorMsg();
+//         if (status == "success" && userName) {
+//             showLoggedInUser(userName);
+//         }
+//         else {
+//             showLoginErrorMsg();
+//         }
+//     }
+//     else
+//         showLoginErrorMsg();
 
-}
+// }
 
 function showLoggedInUser(userName) {
     // $.get("/PHPFiles/login.php?function=redirectToWallPage",
@@ -104,20 +104,3 @@ function showLoginErrorMsg() {
     $(".loginTextBoxes").css("background-color", "#ffb3b3");
 }
 
-
-
-
-
-function logOut() {
-
-    $.post("/PHPFiles/login.php?function=logOut", "",
-        function (data) {
-            data = JSON.parse(JSON.stringify(data));
-            if (data == "success") {
-                alert("logged Out");
-                showLoginForm();
-            }
-        }, "json");  //ajax connection to server
-
-    location.reload();
-}

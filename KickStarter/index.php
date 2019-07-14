@@ -41,6 +41,8 @@
 <!-- <link rel="stylesheet" type="text/css" href="StyleCss/reg.css"> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="JS/registration.js"></script>
 <script src = "JS/loginScript.js"></script>
 
@@ -66,7 +68,7 @@
 				</div>
 			</div>
 
-			<!-- <div class = "loggedInUser"></div>  -->
+			<div class = "loggedInUser"></div> 
 		</div>
 		
 		<!-- <div class = "logOut" >
