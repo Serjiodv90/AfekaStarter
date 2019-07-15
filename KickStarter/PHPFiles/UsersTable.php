@@ -4,7 +4,8 @@ include_once 'DB_Connection.php';
 include_once 'dataBaseConstants.php';
 
 
-class UsersTable {
+class UsersTable
+{
 
     private $_usersTable = USERS_TABLE;
     private $_dbConnection;

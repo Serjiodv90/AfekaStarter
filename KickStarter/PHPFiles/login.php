@@ -37,8 +37,7 @@ function isLogged()
 
 function logOut()
 {
-    if(isset($_SESSION["logged"]) and session_status() === PHP_SESSION_ACTIVE)
-    {
+    if (isset($_SESSION["logged"]) and session_status() === PHP_SESSION_ACTIVE) {
         session_unset();
         session_destroy();
     }
@@ -67,6 +66,7 @@ function loginVerify()
             // echo json_encode(array("name" => $row["fullname"]));
             $_SESSION["logged"] = true;
             $_SESSION["name"] = $row["fullname"];
+            $_SESSION["email"] = $row["email"];
             $_SESSION["id"] = $row["id"];
             header("Location: facebookScreen.php");
         } else {

@@ -1,4 +1,15 @@
-<?php session_start();?>
+<?php 
+
+session_start();
+
+include_once 'PostsTable.php';
+
+$postsDb = new PostsTable();
+$msg = $postsDb->createPostsTable();
+ob_clean();
+
+
+?>
 
 <html>
 <title>FaceAfeka</title>
@@ -41,7 +52,7 @@
 				Share your thoughts:
 			</div>
 			<div class="postTextArea">
-				<textarea class="userStatusTA"  placeholder="What's on your mind, <?php echo ($_SESSION["name"]); ?>?"></textarea>
+				<textarea id="userPostTA" class="userStatusTA"  placeholder="What's on your mind, <?php echo ($_SESSION["name"]); ?>?"></textarea>
 			</div>
 
 
@@ -52,7 +63,7 @@
 					<input class="tgl tgl-flip" id="cb5" type="checkbox"/>
 					<label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
 				</div>
-				<button class="button" type="button" name="publishPostBtn" value="Publish post">Publish post</button>
+				<button class="button" type="button" name="publishPostBtn" value="Publish post" onclick="savePost(this);">Publish post</button>
 
 			</div>
 
@@ -69,9 +80,20 @@
 
 				<div class="postConrollers">
 					<div class="likeBtn" onclick="like();">
-						<img id="likeImg" src="/pics/like.png"/>	
+						<img class="likeImg" src="/pics/like.png"/>	
 						<div class="likeDiv" style="height: 15px; width:40px;">Like</div>
 					</div>
+				</div>
+
+				<div class="commentsArea">
+					<div class="userComment">
+						<textarea class="userStatusTA"  placeholder="Write here your comment"></textarea>
+						<div class="commentBtn likeDiv">Comment</div>
+					</div>
+
+					<div class="postComments">
+					</div>
+
 				</div>
 
 

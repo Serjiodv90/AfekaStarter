@@ -368,7 +368,7 @@ textarea{
     cursor: pointer;
 }
 
-#likeImg{
+.likeImg{
     width: 24px;
     height: 24px;
 }
@@ -382,11 +382,46 @@ textarea{
     line-height: 1.4;
 }
 
+.commentsArea{
+    background-color: white;
+    border-width: 2px;
+    border-style: outset;
+    border-radius: 10px;
+    min-height: 100px;
+    margin: 10px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-    /* .postContent{
+.userComment {
+    border-bottom-width: 2px;
+    border-bottom-style: ridge;
+    border-radius: 10px;
+    width: 95%;
     align-self: flex-start;
-    margin-left: 42px;
-} */
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.userComment textarea{
+    
+    align-self: center;
+}
+
+.userComment .likeDiv{
+    align-self: center;
+    font-size: 13px;
+    height: 18px;
+    width: 59px;
+
+}
+
+.commentBtn{
+    cursor: pointer;
+}
+
 
 
 /******                  TOGGLE                   ******/
