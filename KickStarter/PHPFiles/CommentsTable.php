@@ -2,13 +2,15 @@
 
 include_once 'DB_Connection.php';
 include_once 'dataBaseConstants.php';
+include_once 'PostsTable.php';
 
 
-class PostsTable
+class CommentsTable
 {
 
     private $_postsTable = POSTS_TABLE;
     private $_usersTableName = USERS_TABLE;
+    private $_commentsTable = COMMENTS_TABLE;
     private $_dbConnection;
 
 
@@ -18,7 +20,7 @@ class PostsTable
         $this->_dbConnection = DB_Connection::getConnection();
     }
 
-    public function createPostsTable()
+    public function createCommentsTable()
     {
 
         if ($this->_dbConnection->connect_error) {
@@ -26,14 +28,13 @@ class PostsTable
         }
 
         // sql to create table for users
-        $sql = "CREATE TABLE $this->_postsTable (
+        $sql = "CREATE TABLE $this->_commentsTable (
             `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+            `post_id` INT(6) UNSIGNED NOT NULL,
             `user_id` INT(6) UNSIGNED NOT NULL,
-            `post_content` TEXT NOT NULL,
-            `num_of_likes` INT(4) DEFAULT 0,
-            `num_of_images` INT(1),
-            `private` BOOLEAN DEFAULT FALSE,
+            `comment_content` TEXT NOT NULL,
             `publish_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(`post_id`) REFERENCES $this->_postsTable(`id`),
             FOREIGN KEY(`user_id`) REFERENCES $this->_usersTableName(`id`)  
             )";
 
@@ -47,20 +48,17 @@ class PostsTable
         }
     }
 
-    // public function getUserByEmail($email) {
-    //     $regVerifyQuery =  "SELECT * FROM $this->_postsTable WHERE `email` = '$email'";
-    //     $result = $this->_dbConnection->query($regVerifyQuery);//mysqli_query($usersDbLink, $regVerifyQuery);
-    //     return $result;
-    // }
 
 
-    public function inserPost($user_id, $content, $numOfImages, $isPrivate)
+    public function inserComment($user_id, $post_id, $content)
     {
         $returnMsg = "";
-        $content = $this->_dbConnection->real_escape_string($content);
+
+        $content =  $this->_dbConnection->real_escape_string($content);
         
-        $insertQuery = "INSERT INTO $this->_postsTable (`user_id`, `post_content`, `num_of_images`, `private`)
-                         VALUES ('$user_id', '$content', '$numOfImages', '$isPrivate')";
+
+        $insertQuery = "INSERT INTO $this->_commentsTable (`post_id`, `user_id`, `comment_content`)
+                         VALUES ('$post_id', '$user_id', '$content')";
 
         $query = $this->_dbConnection->query($insertQuery); // Insert query
 
@@ -70,17 +68,23 @@ class PostsTable
             $returnMsg = "DB Error";
             // echo "Error!! ";
         }
-
+        
         return $returnMsg;
     }
 
-    public function getAllpostsOfUserByDate($userId)
+
+    public function getAllCommentsOfPostByPostIdByDate($postId) 
     {
-        $allPostsQueryByDate = "SELECT * from $this->_postsTable ORDER BY `publish_date` DESC";
-        $result = $this->_dbConnection->query($allPostsQueryByDate);
-        if ($result)
+        $allCommentsQueryByDate = "SELECT * from $this->_commentsTable 
+                                    WHERE `post_id` = '$postId' 
+                                    ORDER BY `publish_date` ASC";
+
+        $result = $this->_dbConnection->query($allCommentsQueryByDate);
+        if($result)
             return $result;
-        else
+        else 
             return 0;
     }
+
+    
 }

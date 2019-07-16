@@ -3,10 +3,15 @@
 session_start();
 
 include_once 'PostsTable.php';
+include_once 'CommentsTable.php';
 
 $postsDb = new PostsTable();
 $msg = $postsDb->createPostsTable();
+
+$commentsDb = new CommentsTable();
+$msg2 = $commentsDb->createCommentsTable();
 ob_clean();
+
 
 
 ?>
@@ -70,7 +75,7 @@ ob_clean();
 		</div>
 
 		<div id="posts">
-			<div class="singlePost">
+			<!-- <div class="singlePost">
 				<div class="statusFieldHead"> <?php echo ($_SESSION["name"]); ?>
 				</div>
 
@@ -92,9 +97,16 @@ ob_clean();
 					</div>
 
 					<div class="postComments">
+						<div class="singleComment">
+							<div class="commenterName">Serjio said:
+							</div>
+
+							<div class="commentContent">nice post hadar.
+							</div>
+						</div>
 					</div>
 
-				</div>
+				</div> -->
 
 
 

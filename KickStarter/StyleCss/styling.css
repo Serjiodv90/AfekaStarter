@@ -289,6 +289,8 @@ textarea{
     border-radius: 15px;
     padding: 5px;
     background-color: white;
+    outline: none;
+
 }
 
 .userStatusTA.postContent {
@@ -374,8 +376,8 @@ textarea{
 }
 
 .likeDiv{
-    height: 25px;
-    width: 80px;
+    height: 15px;
+    width: 40px;
     background-color: #7b80ff;
     color: white;
     border-radius: 10px;
@@ -395,12 +397,12 @@ textarea{
 }
 
 .userComment {
-    border-bottom-width: 2px;
-    border-bottom-style: ridge;
+    /* border-bottom-width: 2px; */
+    border-style: ridge;
     border-radius: 10px;
-    width: 95%;
-    align-self: flex-start;
-    margin-left: 10px;
+    width: 97%;
+    align-self: center;
+    margin: 5px 10px 5px 10px;
     display: flex;
     flex-direction: row;
 }
@@ -414,7 +416,7 @@ textarea{
     align-self: center;
     font-size: 13px;
     height: 18px;
-    width: 59px;
+    width: 63px;
 
 }
 
@@ -422,6 +424,26 @@ textarea{
     cursor: pointer;
 }
 
+.singleComment{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: aliceblue;
+    margin: 10px;
+    border-radius: 10px;
+    
+}
+
+.commenterName{
+    align-self: flex-start;
+    padding: 5px 0px 5px 10px;
+    font-weight: bold;
+}
+
+.commentContent{
+    padding: 0px 0px 10px 20px;
+    align-self: flex-start;
+}
 
 
 /******                  TOGGLE                   ******/

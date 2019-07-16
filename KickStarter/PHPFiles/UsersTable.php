@@ -40,13 +40,21 @@ class UsersTable
             echo ("false");
         }
     }
-
+    
     public function getUserByEmail($email) {
         $regVerifyQuery =  "SELECT * FROM $this->_usersTable WHERE `email` = '$email'";
         $result = $this->_dbConnection->query($regVerifyQuery);//mysqli_query($usersDbLink, $regVerifyQuery);
         return $result;
     }
 
+    public function getUserNameById($id){
+        $selectNameQuery = "SELECT `fullname` FROM $this->_usersTable WHERE `id` = '$id'";
+        $result = $this->_dbConnection->query($selectNameQuery);
+        if($row = $result->fetch_array())
+            return $row["fullname"];
+        else 
+            return 0;
+    }
 
     public function insertUser($email, $userName, $password) {
         $password = sha1($password); // Password Encryption.
@@ -87,6 +95,3 @@ class UsersTable
 
 
 }
-
-
-?>

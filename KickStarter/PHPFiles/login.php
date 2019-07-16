@@ -1,6 +1,6 @@
 <?php
 
-// session_start();
+session_start();
 include_once 'dataBaseConstants.php';
 include_once 'UsersTable.php';
 
@@ -68,6 +68,8 @@ function loginVerify()
             $_SESSION["name"] = $row["fullname"];
             $_SESSION["email"] = $row["email"];
             $_SESSION["id"] = $row["id"];
+            
+            ob_clean();
             header("Location: facebookScreen.php");
         } else {
             echo json_encode("wrong user");
