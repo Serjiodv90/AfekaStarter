@@ -58,7 +58,7 @@ class PostsTable
     {
         $returnMsg = "";
         $content = $this->_dbConnection->real_escape_string($content);
-        
+
         $insertQuery = "INSERT INTO $this->_postsTable (`user_id`, `post_content`, `num_of_images`, `private`)
                          VALUES ('$user_id', '$content', '$numOfImages', '$isPrivate')";
 
@@ -76,7 +76,10 @@ class PostsTable
 
     public function getAllpostsOfUserByDate($userId)
     {
-        $allPostsQueryByDate = "SELECT * from $this->_postsTable ORDER BY `publish_date` DESC";
+        $allPostsQueryByDate = "SELECT * 
+                                FROM $this->_postsTable 
+                                WHERE `user_id` = $userId OR `private` = 0
+                                ORDER BY `publish_date` DESC";
         $result = $this->_dbConnection->query($allPostsQueryByDate);
         if ($result)
             return $result;

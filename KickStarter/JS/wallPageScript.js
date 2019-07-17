@@ -9,13 +9,7 @@ updateWall = () => {
 };
 
 $(document).ready(updateWall);
-//     function () {
 
-//     $.post("/PHPFiles/wallFeedController.php", { function: "getAllPostsOfUser" },
-//         function (data) {
-//             $("#posts").append(data);
-//         });
-// });
 
 function logOut() {
 
@@ -52,6 +46,8 @@ function savePost() {
         $.post(savePostPath, paramsToBack, function (data) {
             privacyCheckbox.prop('checked', false); // Unchecks it
             postTextAreaEl.val("");
+            updateWall();
+
            
         });
     }
