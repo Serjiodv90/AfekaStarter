@@ -9,6 +9,7 @@ class PostsTable
 
     private $_postsTable = POSTS_TABLE;
     private $_usersTableName = USERS_TABLE;
+    private $_friendsTable = FRIENDS_CONNECTION_TABLE;
     private $_dbConnection;
 
 
@@ -76,17 +77,19 @@ class PostsTable
 
     public function getAllpostsOfUserByDate($userId)
     {
-        $allPostsQueryByDate = "SELECT * 
-                                FROM $this->_postsTable 
-                                WHERE `user_id` = $userId OR `private` = 0
-                                ORDER BY `publish_date` DESC";
+        // $allPostsQueryByDate = "SELECT * 
+        //                         FROM $this->_postsTable 
+        //                         WHERE `user_id` = $userId OR `private` = 0
+        //                         ORDER BY `publish_date` DESC";
 
 
-// $selectPosts = "SELECT Posts.id, Posts.body, Posts.datePosted, Posts.userId, Posts.privacy, Posts.likes".
-// " FROM " . POSTS_TABLE_NAME .
-// " INNER JOIN " . FRIENDSHIPS_TABLE_NAME .
-// " ON Posts.userId=Friendships.secondFriendId WHERE (Friendships.firstFriendId=" . $loginSession .
-// " AND Posts.privacy='public') OR (Posts.userId=" . $loginSession . ") ORDER BY datePosted DESC LIMIT 8";
+        $allPostsQueryByDate = "SELECT p.id ,p.user_id, p.post_content, p.num_of_likes, p.num_of_images, p.private, p.publish_date
+                                FROM $this->_postsTable p
+                                LEFT JOIN $this->_friendsTable f
+                                    ON p.user_id = f.friend_id
+                                WHERE (f.user_id = $userId AND p.private = 0)
+                                    OR (p.user_id = $userId) 
+                                ORDER BY p.publish_date DESC";
 
         $result = $this->_dbConnection->query($allPostsQueryByDate);
         if ($result)
@@ -95,3 +98,11 @@ class PostsTable
             return 0;
     }
 }
+
+// SELECT * 
+// FROM posts p
+// LEFT JOIN friends f
+// ON p.user_id = f.friend_id
+// WHERE (f.user_id = 3 AND p.private = 0)
+// OR (p.user_id = 3) 
+// ORDER BY p.publish_date DESC
