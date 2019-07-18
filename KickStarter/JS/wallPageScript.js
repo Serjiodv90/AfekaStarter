@@ -1,6 +1,6 @@
 
 updateWall = () => {
-    
+
     $.post("/PHPFiles/wallFeedController.php", { function: "getAllPostsOfUser" },
         function (data) {
             $("#posts").empty();
@@ -9,6 +9,30 @@ updateWall = () => {
 };
 
 $(document).ready(updateWall);
+
+
+function addFriendToCurrentUser(friendId, friendName) {
+    addFriendPath = "/PHPFiles/wallFeedController.php";
+    paramsToBack = { function: "addFriendToCurrentUser", friendsId: friendId };
+
+    $.post(addFriendPath, paramsToBack, function (data) {
+        emptyFriendsSerachResult();
+        if (data && data === "ok") {
+            var userNameDiv = document.createElement('div');
+            userNameDiv.setAttribute('id', "addedFriendCongrats");
+            var congratsMsg = document.createElement('p');
+            congratsMsg.innerHTML = "Congrats! you and " + friendName + ",\nare friends now!";
+            userNameDiv.appendChild(congratsMsg);
+            $("#friendsResult").append(userNameDiv);
+
+            $("#addedFriendCongrats").fadeOut(5000, function () { emptyFriendsSerachResult(); });
+        }
+
+    });
+
+
+
+}
 
 
 function logOut() {
@@ -48,22 +72,75 @@ function savePost() {
             postTextAreaEl.val("");
             updateWall();
 
-           
+
         });
     }
 }
 
 function addComment(postId) {
-    savePostPath = "/PHPFiles/wallFeedController.php";
+    addCommentPath = "/PHPFiles/wallFeedController.php";
     commentContentSelectorXpath = (".ta_").concat(postId);
     textArea = $(commentContentSelectorXpath);
     commentContent = textArea.val();
     if (commentContent && commentContent !== "") {
         paramsToBack = { function: "insertCommentToPostByPostId", postId: postId, commentContent: commentContent };
-        $.post(savePostPath, paramsToBack, function (data) {
+        $.post(addCommentPath, paramsToBack, function (data) {
             textArea.val("");
             updateWall();
         });
     }
+}
+
+function insertUserNameInSearchResult(userId, userName) {
+    // $("#friendsResult").html(data);
+    $("#friendsResult").empty();
+    var userNameDiv = document.createElement('div');
+    userNameDiv.setAttribute('class', "userName u_" + userId);
+    userNameDiv.setAttribute('onclick', "addFriendToCurrentUser(" + userId + ", \"" + userName + "\");");
+    userNameDiv.innerHTML = userName;
+    $("#friendsResult").append(userNameDiv);
+
+
+}
+
+function emptyFriendsSerachResult() {
+    // $("#searchBar > input").val("");
+    $("#friendsResult").empty();
+}
+
+//remove friends search result
+$(document).click(function(event) { 
+    $target = $(event.target);
+    if(!$target.closest('#friendsResult').length || !$target.is(('#friendsResult')))
+        emptyFriendsSerachResult();
+
+  });
+
+function searchFriend(stringToSearch) {
+    searchFriendPath = "/PHPFiles/wallFeedController.php";
+
+    if (stringToSearch && stringToSearch !== "") {
+        paramsToBack = { function: "searchUser", stringToSearch: stringToSearch };
+        $.post(searchFriendPath, paramsToBack, function (data) {
+            data = JSON.parse(JSON.stringify(data));
+            if (data && data !== "false") {
+
+                for (var key in data) {
+                    insertUserNameInSearchResult(key, data[key]);
+                    console.log(data[key]);
+                }
+            }
+            else
+                emptyFriendsSerachResult();
+
+
+        }, "json");
+    }
+    else
+        $("#friendsResult").html("");
+
+
+
+
 }
 

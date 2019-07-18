@@ -80,6 +80,14 @@ class PostsTable
                                 FROM $this->_postsTable 
                                 WHERE `user_id` = $userId OR `private` = 0
                                 ORDER BY `publish_date` DESC";
+
+
+// $selectPosts = "SELECT Posts.id, Posts.body, Posts.datePosted, Posts.userId, Posts.privacy, Posts.likes".
+// " FROM " . POSTS_TABLE_NAME .
+// " INNER JOIN " . FRIENDSHIPS_TABLE_NAME .
+// " ON Posts.userId=Friendships.secondFriendId WHERE (Friendships.firstFriendId=" . $loginSession .
+// " AND Posts.privacy='public') OR (Posts.userId=" . $loginSession . ") ORDER BY datePosted DESC LIMIT 8";
+
         $result = $this->_dbConnection->query($allPostsQueryByDate);
         if ($result)
             return $result;

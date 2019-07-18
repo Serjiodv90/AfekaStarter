@@ -12,12 +12,14 @@ class UsersTable
 
 
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->_dbConnection = DB_Connection::getConnection();
     }
 
-    public function createUsersTable() {
-       
+    public function createUsersTable()
+    {
+
         if ($this->_dbConnection->connect_error) {
             die("Connection failed: " . $this->_connection->connect_error);
         }
@@ -31,7 +33,7 @@ class UsersTable
             `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
 
-            
+
         if ($this->_dbConnection->query($sql) === TRUE) {
             // return TRUE;
             echo ("true");
@@ -40,37 +42,54 @@ class UsersTable
             echo ("false");
         }
     }
-    
-    public function getUserByEmail($email) {
+
+    public function getUserByEmail($email)
+    {
         $regVerifyQuery =  "SELECT * FROM $this->_usersTable WHERE `email` = '$email'";
-        $result = $this->_dbConnection->query($regVerifyQuery);//mysqli_query($usersDbLink, $regVerifyQuery);
+        $result = $this->_dbConnection->query($regVerifyQuery); //mysqli_query($usersDbLink, $regVerifyQuery);
         return $result;
     }
 
-    public function getUserNameById($id){
+    public function getUserNameBySubstring($substring)
+    {
+        $searchForUser = "SELECT `id`, `fullname` 
+                            FROM $this->_usersTable 
+                            WHERE `fullname` LIKE '%$substring%';
+                            -- OR `email` LIKE '%$substring%'";
+        $result = $this->_dbConnection->query($searchForUser);
+        $namesArray = array();
+        while($row = $result->fetch_array())
+        {
+            $namesArray[$row['id']] = $row['fullname'];
+        }
+        return $namesArray;
+        
+    }
+
+    public function getUserNameById($id)
+    {
         $selectNameQuery = "SELECT `fullname` FROM $this->_usersTable WHERE `id` = '$id'";
         $result = $this->_dbConnection->query($selectNameQuery);
-        if($row = $result->fetch_array())
+        if ($row = $result->fetch_array())
             return $row["fullname"];
-        else 
+        else
             return 0;
     }
 
-    public function insertUser($email, $userName, $password) {
+    public function insertUser($email, $userName, $password)
+    {
         $password = sha1($password); // Password Encryption.
         $returnMsg = "";
 
         // Check if e-mail address syntax is valid or not
         $email = filter_var($email, FILTER_SANITIZE_EMAIL); // Sanitizing email(Remove unexpected symbol like <,>,?,#,!, etc.)
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        }
-        else {
-           
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { } else {
+
             $result = $this->getUserByEmail($email);
-            $numOfRows = $result->num_rows;//mysqli_num_rows($result);
+            $numOfRows = $result->num_rows; //mysqli_num_rows($result);
 
             if ($numOfRows == 0) {   // if the user doesn't registered already
-                
+
                 $insertQuery = "INSERT INTO $this->_usersTable (fullname, email, pass) VALUES ('$userName', '$email', '$password')";
                 $query = $this->_dbConnection->query($insertQuery); // Insert query
 
@@ -84,14 +103,12 @@ class UsersTable
                 } else {
                     $returnMsg = "DB Error";
                     // echo "Error!! ";
-                    }
+                }
             } else {
                 $returnMsg = "User exists";
                 // echo "This email is already registered, Please try another email";
-                }
-        }       
+            }
+        }
         return $returnMsg;
     }
-
-
 }

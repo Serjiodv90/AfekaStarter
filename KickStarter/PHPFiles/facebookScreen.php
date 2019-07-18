@@ -1,15 +1,19 @@
 <?php 
 
-// session_start();
+session_start();
 
 include_once 'PostsTable.php';
 include_once 'CommentsTable.php';
+include_once 'FriendsTable.php';
 
 $postsDb = new PostsTable();
 $msg = $postsDb->createPostsTable();
 
 $commentsDb = new CommentsTable();
 $msg2 = $commentsDb->createCommentsTable();
+
+$friendsDb = new FriendsTable();
+$msg3 = $friendsDb->createFriendsTable();
 ob_clean();
 
 
@@ -46,10 +50,21 @@ ob_clean();
 			<button class = "button" type = "button" name = "logOut" value = "Log Out" onclick = "logOut()">Log out</button>		
 			</div>
 
-		</div>
-		
-		
+		</div>	
 	</div>
+
+	<div id="friendSearch">
+		<div id="searchBar">
+			<input type="text" placeholder="Search for a friend.." onkeyup="searchFriend(this.value);">
+		</div>
+
+		<div id="friendsResult">
+			<!-- <div class="userName">
+				Hadar Pur
+			</div> -->
+		</div>
+	</div>
+
 
 	<div id="wall" >
 		<div id="statusField" class="postContainer">

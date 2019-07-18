@@ -5,6 +5,7 @@ include_once 'dataBaseConstants.php';
 include_once 'PostsTable.php';
 include_once 'UsersTable.php';
 include_once 'CommentsTable.php';
+include_once 'FriendsTable.php';
 
 $postTableConn = new PostsTable();
 
@@ -20,8 +21,11 @@ if (isset($_POST["function"]) and $_POST["function"] != "") {
         case 'insertCommentToPostByPostId':
             insertCommentToPostByPostId();
             break;
-        case 'redirectToWallPage':
-            redirectToWallPage();
+        case 'searchUser':
+            searchUser();
+            break;
+        case 'addFriendToCurrentUser':
+            addFriendToCurrentUser();
             break;
     }
 }
@@ -49,6 +53,32 @@ function insertCommentToPostByPostId()
 
     $commentsTableConn = new CommentsTable();
     echo ($commentsTableConn->inserComment($userId, $postId, $commentContent));
+}
+
+function searchUser()
+{
+    $stringToSearch = $_POST["stringToSearch"];
+    $usersTableConn = new UsersTable();
+    $resultArray = $usersTableConn->getUserNameBySubstring($stringToSearch);
+    if (!empty($resultArray))
+        echo json_encode($resultArray);
+    else
+        echo json_encode("false");
+}
+
+function addFriendToCurrentUser()
+{
+    $friendsId = $_POST["friendsId"];
+    if ($friendsId !== $_SESSION["id"]) {
+        $friendsTableConn = new FriendsTable();
+        $msg = $friendsTableConn->insertFriendOfCurrentUser($friendsId);
+        if($msg === "ok")
+            echo ("ok");
+        elseif ($msg === "friendship exists") {
+            echo ($msg);
+        }
+    } else 
+        echo ("same user");
 }
 
 function getAllPostsOfUser()
@@ -161,7 +191,7 @@ function getAllPostsOfUser()
             if ($commentsForPost->num_rows > 0) {
 
                 while ($row = $commentsForPost->fetch_array()) {
-                    
+
                     $commenterName = $usersTableConn->getUserNameById($row["user_id"]);
                     $commentContent = $row["comment_content"];
 
@@ -188,7 +218,7 @@ function getAllPostsOfUser()
 
 
 
-            
+
             $commentsDiv->appendChild($allCommentsDiv);
             $postDiv->appendChild($commentsDiv);
             $dom->appendChild($postDiv);

@@ -445,6 +445,43 @@ textarea{
     align-self: flex-start;
 }
 
+#friendSearch{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    width: 270px;
+    margin: 5px;
+    border-style: inset;
+    border-radius: 10px;
+    float: left;
+}
+
+#searchBar{
+    width: 100%;
+    height: 30px;
+    border-bottom-width: 2px;
+    border-bottom-style: ridge;
+}
+
+.userName{
+    display: flex;
+    justify-self: flex-start;
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    border-bottom-style: inset;
+    border-bottom-width: 2px;
+    cursor: pointer;
+
+}
+
+.userName:hover {
+    color: #7b80ff;
+}
+
+
 
 /******                  TOGGLE                   ******/
 /*copied from: https://codepen.io/mallendeo/pen/eLIiG  */
