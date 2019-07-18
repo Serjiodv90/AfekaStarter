@@ -481,6 +481,28 @@ textarea{
     color: #7b80ff;
 }
 
+.postHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.statusFieldHead{
+    display: flex;
+    justify-self: self-start;
+}
+
+.privacyCheckBox{
+    display: flex;
+    justify-self: center;
+    margin: 10px 44px;
+}
+
+.nolLabel {
+    font-size: 10px;
+}
+
+
 
 
 /******                  TOGGLE                   ******/

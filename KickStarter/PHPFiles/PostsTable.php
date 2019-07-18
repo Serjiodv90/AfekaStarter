@@ -48,11 +48,35 @@ class PostsTable
         }
     }
 
-    // public function getUserByEmail($email) {
-    //     $regVerifyQuery =  "SELECT * FROM $this->_postsTable WHERE `email` = '$email'";
-    //     $result = $this->_dbConnection->query($regVerifyQuery);//mysqli_query($usersDbLink, $regVerifyQuery);
-    //     return $result;
-    // }
+    public function togglePostPrivacy($postId)
+    {
+        $returnMsg = "";
+        
+        $selectRowQuery = "SELECT `private` 
+                           FROM $this->_postsTable 
+                           WHERE `id` = '$postId'";
+        
+        $currentPrivacyVal = 0;
+
+        if( ($result = $this->_dbConnection->query($selectRowQuery)) === TRUE)
+            $currentPrivacyVal = $result->fetch_array()["private"];
+        
+        $nextPrivacyVal = ($currentPrivacyVal == 1) ? 0 : 1;
+
+
+        $updatePrivacytQuery = "UPDATE $this->_postsTable SET `private` = '$nextPrivacyVal' WHERE `id` = '$postId'";
+
+        $result = $this->_dbConnection->query($updatePrivacytQuery); // Insert query
+
+        if ($result === TRUE) {
+            $returnMsg = "ok";
+        } else {
+            $returnMsg = "DB Error";
+            // echo "Error!! ";
+        }
+
+        return $returnMsg;
+    }
 
 
     public function inserPost($user_id, $content, $numOfImages, $isPrivate)
@@ -98,11 +122,3 @@ class PostsTable
             return 0;
     }
 }
-
-// SELECT * 
-// FROM posts p
-// LEFT JOIN friends f
-// ON p.user_id = f.friend_id
-// WHERE (f.user_id = 3 AND p.private = 0)
-// OR (p.user_id = 3) 
-// ORDER BY p.publish_date DESC

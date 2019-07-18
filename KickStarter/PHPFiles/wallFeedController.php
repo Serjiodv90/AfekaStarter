@@ -27,6 +27,9 @@ if (isset($_POST["function"]) and $_POST["function"] != "") {
         case 'addFriendToCurrentUser':
             addFriendToCurrentUser();
             break;
+        case 'togglePostPrivate':
+            togglePostPrivate();
+            break;
     }
 }
 
@@ -72,13 +75,20 @@ function addFriendToCurrentUser()
     if ($friendsId !== $_SESSION["id"]) {
         $friendsTableConn = new FriendsTable();
         $msg = $friendsTableConn->insertFriendOfCurrentUser($friendsId);
-        if($msg === "ok")
+        if ($msg === "ok")
             echo ("ok");
         elseif ($msg === "friendship exists") {
             echo ($msg);
         }
-    } else 
+    } else
         echo ("same user");
+}
+
+function togglePostPrivate()
+{
+    global $postTableConn;
+    $postId = $_POST["postId"];
+    $postTableConn->togglePostPrivacy($postId);
 }
 
 function getAllPostsOfUser()
@@ -106,11 +116,48 @@ function getAllPostsOfUser()
 
             //publisher's name, according to DB
             $userName = $usersTableConn->getUserNameById($row["user_id"]);
+            $PostHeaderDiv = $dom->createElement('div');
+            $PostHeaderDivClass = $dom->createAttribute('class');
+            $PostHeaderDivClass->value = "postHeader";
+            $PostHeaderDiv->appendChild($PostHeaderDivClass);
+
             $statusDiv = $dom->createElement('div', $userName);
             $statusDivClass = $dom->createAttribute('class');
             $statusDivClass->value = "statusFieldHead";
             $statusDiv->appendChild($statusDivClass);
-            $postDiv->appendChild($statusDiv);
+            $PostHeaderDiv->appendChild($statusDiv);
+            //display checkbox only if the current user is the post owner
+            if (strcmp($row["user_id"], getCurrentUserId()) === 0) {
+                //privacy checkbox div
+                $privacyCheckBoxDiv = $dom->createElement('div');
+                $privacyCheckBoxDivClass = $dom->createAttribute('class');
+                $privacyCheckBoxDivClass->value = "privacyCheckBox";
+                $privacyCheckBoxDiv->appendChild($privacyCheckBoxDivClass);
+                $privateLabel = $dom->createElement('label', "Private");
+                $privateLabelFor = $dom->createAttribute('for');
+                $privateLabelFor->value = "privacyCheckbox";
+                $privateLabel->appendChild($privateLabelFor);
+                $privacyCheckBoxDiv->appendChild($privateLabel);
+                $privateCheckBox = $dom->createElement('input');
+                $privateCheckBoxClass = $dom->createAttribute('class');
+                $privateCheckBoxClass->value = "privateCheck cb_$postID";
+                $privateCheckBox->appendChild($privateCheckBoxClass);
+                $privateCheckBoxType = $dom->createAttribute('type');
+                $privateCheckBoxType->value = "checkbox";
+                $privateCheckBox->appendChild($privateCheckBoxType);
+                $privateCheckBoxName = $dom->createAttribute('name');
+                $privateCheckBoxName->value = "privacyCheckbox";
+                $privateCheckBox->appendChild($privateCheckBoxName);
+                //check if current post of the current user and its privacy
+                if ($row["private"] == 1) {
+                    $checkBoxChecked = $dom->createAttribute('checked');
+                    $privateCheckBox->appendChild($checkBoxChecked);
+                }
+                $privacyCheckBoxDiv->appendChild($privateCheckBox);
+                $PostHeaderDiv->appendChild($privacyCheckBoxDiv);
+            }
+
+            $postDiv->appendChild($PostHeaderDiv);
 
             //the post content, from DB
             $postContent = $row["post_content"];
