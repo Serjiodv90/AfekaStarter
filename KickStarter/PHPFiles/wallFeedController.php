@@ -1,13 +1,18 @@
 <?php
 
-session_start();
+// session_start();
 include_once 'dataBaseConstants.php';
 include_once 'PostsTable.php';
 include_once 'UsersTable.php';
 include_once 'CommentsTable.php';
 include_once 'FriendsTable.php';
+include_once 'LikesTable.php';
+include_once 'PostImagesTable.php';
+include_once "sessionManager.php";
+
 
 $postTableConn = new PostsTable();
+$postImagesFolder = "/pics/postImages";
 
 // use different function in the php file
 if (isset($_POST["function"]) and $_POST["function"] != "") {
@@ -30,13 +35,19 @@ if (isset($_POST["function"]) and $_POST["function"] != "") {
         case 'togglePostPrivate':
             togglePostPrivate();
             break;
+        case 'toggleLikeForPost':
+            toggleLikeForPost();
+            break;
+        case 'tempStoreImage':
+            tempStoreImage();
+            break;
     }
 }
 
-function getCurrentUserId()
-{
-    return $_SESSION["id"];
-}
+// function getCurrentUserId()
+// {
+//     return $_SESSION["id"];
+// }
 
 function insertPost()
 {
@@ -62,7 +73,13 @@ function searchUser()
 {
     $stringToSearch = $_POST["stringToSearch"];
     $usersTableConn = new UsersTable();
-    $resultArray = $usersTableConn->getUserNameBySubstring($stringToSearch);
+    $resultArray = null;
+
+    if ($stringToSearch === "*")
+        $resultArray = $usersTableConn->getAllUserName();
+    else
+        $resultArray = $usersTableConn->getUserNameBySubstring($stringToSearch);
+
     if (!empty($resultArray))
         echo json_encode($resultArray);
     else
@@ -91,21 +108,79 @@ function togglePostPrivate()
     $postTableConn->togglePostPrivacy($postId);
 }
 
+function toggleLikeForPost()
+{
+    global $postTableConn;
+    $likesTable = new LikesTable();
+    $postId = $_POST["postId"];
+    $isLiked = $likesTable->toggleLikeForCurrentUserToPostByPostId($postId);
+    if ($isLiked === "true") {
+        $postTableConn->addLikeToPostById($postId, 1);
+    } elseif ($isLiked === "false") {
+        $postTableConn->addLikeToPostById($postId, -1);
+    }
+}
+
+function tempStoreImage()
+{
+    global $postImagesFolder;
+    echo ("in tempStoreImage");
+    echo ("formData: " . $_POST["images"]);
+    echo $_FILES["postImage"]["error"];
+
+    if (isset($_FILES["postImage"]) && $_FILES["postImage"]["error"] == 0) {
+        $allowedEx = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "git" => "image/gif", "png" => "image/png");
+        $fileName = $_FILES["postImage"]["name"];   //get the full name of the file including the extenssion
+        $fileType = $_FILES["postImage"]["type"];
+        $fileSize = $_FILES["postImage"]["size"];
+
+        echo "File Name: " . $_FILES["photo"]["name"] . "<br>";
+        echo "File Type: " . $_FILES["photo"]["type"] . "<br>";
+        echo "File Size: " . ($_FILES["photo"]["size"] / 1024) . " KB<br>";
+        echo "Stored in: " . $_FILES["photo"]["tmp_name"];
+
+        //verify extenssion correct
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION); //extract the file extension
+        if (!array_key_exists($ext, $allowedEx))
+            die("Wrong image format");
+
+        //maximize the file size to 5Mb
+        $maxSize = 5 * 1024 * 1024;
+        if ($fileSize > $maxSize)
+            die("The file is too big");
+
+        //verify mime type of the file
+        if (in_array($fileType, $allowedEx)) {
+            $fileName = getCurrentUserId() . '_' . $fileName;
+            //check if the file exists before uploading it
+            if (file_exists($postImagesFolder . $fileName))
+                echo ("Image exists already");
+            else {
+                move_uploaded_file($_FILES["photo"]["tmp_name"], $postImagesFolder . $fileName);
+                echo ("file was uploaded: $postImagesFolder $fileName");
+            }
+        } else
+            echo ("MIME is not good");
+    }
+}
+
 function getAllPostsOfUser()
 {
     //find all friends of user, and select post by friends' id's
     global $postTableConn;
     $usersTableConn = new UsersTable();
     $commentsTableConn = new CommentsTable();
+    $likesTable = new LikesTable();
+    $imagesTable = new PostImagesTable();
 
     $result = $postTableConn->getAllpostsOfUserByDate(getCurrentUserId());
     $numOfRows = $result->num_rows;
+    
 
     $dom = new DOMDocument('1.0', "utf-8");
-
+    $count = 0;
     if ($numOfRows > 0) {
         while ($row = $result->fetch_array()) {
-
             $postID = $row["id"];
 
             //wrapping div of the whole post
@@ -148,6 +223,9 @@ function getAllPostsOfUser()
                 $privateCheckBoxName = $dom->createAttribute('name');
                 $privateCheckBoxName->value = "privacyCheckbox";
                 $privateCheckBox->appendChild($privateCheckBoxName);
+                $privateCheckBoxFunc = $dom->createAttribute('onchange');
+                $privateCheckBoxFunc->value = "togglePrivacy($postID);";
+                $privateCheckBox->appendChild($privateCheckBoxFunc);
                 //check if current post of the current user and its privacy
                 if ($row["private"] == 1) {
                     $checkBoxChecked = $dom->createAttribute('checked');
@@ -165,11 +243,37 @@ function getAllPostsOfUser()
             $postContentDivClass = $dom->createAttribute('class');
             $postContentDivClass->value = "postTextArea";
             $postContentDiv->appendChild($postContentDivClass);
-            $postFieldDiv = $dom->createElement('div', $postContent);
-            $postFieldDivClass = $dom->createAttribute('class');
-            $postFieldDivClass->value = "userStatusTA postContent";
-            $postFieldDiv->appendChild($postFieldDivClass);
-            $postContentDiv->appendChild($postFieldDiv);
+            if ($postContent != "") {
+                $postFieldDiv = $dom->createElement('div', $postContent);
+                $postFieldDivClass = $dom->createAttribute('class');
+                $postFieldDivClass->value = "userStatusTA postContent";
+                $postFieldDiv->appendChild($postFieldDivClass);
+                $postContentDiv->appendChild($postFieldDiv);
+            }
+            //post images
+            if ($row["num_of_images"] > 0) {
+                $imagesRes = $imagesTable->getImagesForPostByPostId($postID);
+
+                $postImagesDiv = $dom->createElement('div');
+                $postImagesDivClass = $dom->createAttribute('class');
+                $postImagesDivClass->value = "postImage";
+                $postImagesDiv->appendChild($postImagesDivClass);
+
+                while ($imageRow = $imagesRes->fetch_array()) {
+                    $imgEl = $dom->createElement('img');
+                    $imgElSrc = $dom->createAttribute('src');
+                    $imgElSrc->value = $imageRow["image_name"];
+                    $imgEl->appendChild($imgElSrc);
+                    $imgElClickFunc = $dom->createAttribute('onclick');
+                    $imgElClickFunc->value = "enlargeImage(this);";
+                    $imgEl->appendChild($imgElClickFunc);
+                    $postImagesDiv->appendChild($imgEl);
+                }
+                $postContentDiv->appendChild($postImagesDiv);
+            }
+
+
+
             $postDiv->appendChild($postContentDiv);
 
             //like button's div
@@ -189,7 +293,12 @@ function getAllPostsOfUser()
             $likeIconClass->value = "likeImg";
             $likeIcon->appendChild($likeIconClass);
             $likeIconSrc = $dom->createAttribute('src');
-            $likeIconSrc->value = "/pics/like.png";
+
+            //check weather the user liked this post
+            if ($likesTable->checkCurrentUserLikePostByPostId($postID) === TRUE)
+                $likeIconSrc->value = "/pics/liked.png";
+            else
+                $likeIconSrc->value = "/pics/like.png";
             $likeIcon->appendChild($likeIconSrc);
             $likeBtnDiv->appendChild($likeIcon);
             $likeTextDiv = $dom->createElement('div', "Like");
@@ -198,6 +307,24 @@ function getAllPostsOfUser()
             $likeTextDiv->appendChild($likeTextDivClass);
             $likeBtnDiv->appendChild($likeTextDiv);
             $controllersDiv->appendChild($likeBtnDiv);
+
+            //amount of likes
+            $numOfLikeForPost = $row["num_of_likes"];
+            if ($numOfLikeForPost > 0) {
+                $numOfLikesDiv = $dom->createElement('div');
+                $numOfLikesDivClass = $dom->createAttribute('class');
+                $numOfLikesDivClass->value = "numOfLikesDiv";
+                $numOfLikesDiv->appendChild($numOfLikesDivClass);
+
+                $numOfLikesLabel = $dom->createElement('label', "Likes: $numOfLikeForPost");
+                $numOfLikesLabelClass = $dom->createAttribute('class');
+                $numOfLikesLabelClass->value = "nolLabel nol_$postID";
+                $numOfLikesLabel->appendChild($numOfLikesLabelClass);
+                $numOfLikesDiv->appendChild($numOfLikesLabel);
+
+                $controllersDiv->appendChild($numOfLikesDiv);
+            }
+
             $postDiv->appendChild($controllersDiv);
 
             //the whole post comments area
@@ -260,11 +387,6 @@ function getAllPostsOfUser()
                     $allCommentsDiv->appendChild($singleCommentDiv);
                 }
             }
-
-
-
-
-
 
             $commentsDiv->appendChild($allCommentsDiv);
             $postDiv->appendChild($commentsDiv);

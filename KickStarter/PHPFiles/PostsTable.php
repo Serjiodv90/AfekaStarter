@@ -40,10 +40,8 @@ class PostsTable
 
 
         if ($this->_dbConnection->query($sql) === TRUE) {
-            // return TRUE;
             echo ("true");
         } else {
-            // return FALSE;
             echo ("false");
         }
     }
@@ -51,33 +49,45 @@ class PostsTable
     public function togglePostPrivacy($postId)
     {
         $returnMsg = "";
-        
+
         $selectRowQuery = "SELECT `private` 
                            FROM $this->_postsTable 
                            WHERE `id` = '$postId'";
-        
+
         $currentPrivacyVal = 0;
+        $result = $this->_dbConnection->query($selectRowQuery);
 
-        if( ($result = $this->_dbConnection->query($selectRowQuery)) === TRUE)
-            $currentPrivacyVal = $result->fetch_array()["private"];
-        
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_array();
+            $currentPrivacyVal = $row["private"];
+        }
+
         $nextPrivacyVal = ($currentPrivacyVal == 1) ? 0 : 1;
-
-
         $updatePrivacytQuery = "UPDATE $this->_postsTable SET `private` = '$nextPrivacyVal' WHERE `id` = '$postId'";
-
-        $result = $this->_dbConnection->query($updatePrivacytQuery); // Insert query
+        $result = $this->_dbConnection->query($updatePrivacytQuery); // Update query
 
         if ($result === TRUE) {
             $returnMsg = "ok";
         } else {
             $returnMsg = "DB Error";
-            // echo "Error!! ";
         }
 
         return $returnMsg;
     }
 
+    public function addLikeToPostById($postId, $incDecVal)
+    {
+        $updateLikestQuery = "UPDATE $this->_postsTable SET `num_of_likes` = num_of_likes + $incDecVal WHERE `id` = '$postId'";
+        $result = $this->_dbConnection->query($updateLikestQuery); // Update query
+
+        if ($result === TRUE) {
+            $returnMsg = "ok";
+        } else {
+            $returnMsg = "DB Error";
+        }
+
+        return $returnMsg;
+    }
 
     public function inserPost($user_id, $content, $numOfImages, $isPrivate)
     {
@@ -90,7 +100,7 @@ class PostsTable
         $query = $this->_dbConnection->query($insertQuery); // Insert query
 
         if ($query === TRUE) {
-            $returnMsg = "ok";
+            $returnMsg = $this->_dbConnection->insert_id;
         } else {
             $returnMsg = "DB Error";
             // echo "Error!! ";
@@ -110,7 +120,7 @@ class PostsTable
         $allPostsQueryByDate = "SELECT p.id ,p.user_id, p.post_content, p.num_of_likes, p.num_of_images, p.private, p.publish_date
                                 FROM $this->_postsTable p
                                 LEFT JOIN $this->_friendsTable f
-                                    ON p.user_id = f.friend_id
+                                    ON (p.user_id = f.friend_id AND f.user_id = $userId)
                                 WHERE (f.user_id = $userId AND p.private = 0)
                                     OR (p.user_id = $userId) 
                                 ORDER BY p.publish_date DESC";

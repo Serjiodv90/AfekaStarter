@@ -8,7 +8,52 @@ updateWall = () => {
         });
 };
 
-$(document).ready(updateWall);
+function cleanPostArea() {
+    $("#cb5").prop('checked', false); // Unchecks it
+    $("#userPostTA").val("");
+    $("#uploadImage").val("");
+}
+
+$(document).ready(function (event) {
+
+    updateWall();
+
+    $(".addImageFrom").on('submit', function (event) {
+        event.preventDefault();
+        postTextAreaEl = $("#userPostTA");
+        content = postTextAreaEl.val();
+        var numOfImages = $("#uploadImage").get(0).files.length;
+
+        if ((content && content !== "") || numOfImages > 0) {
+            $.ajax({
+                url: "/PHPFiles/PostUpload.php",
+                type: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+
+                success: function (data) {
+                    console.log(data);
+                    cleanPostArea();
+                    updateWall();
+                }
+            });
+        }
+    });
+
+
+    // $("#uploadImage").change(function (e) {
+    //     console.log(this.files);
+    //     var numOfImages = $("#uploadImage").get(0).files.length;
+    //     // if (numOfImages > 6) {
+    //     //     $("#uploadImage").val("");  //empty the chosen images
+    //     //     alert("you can upload up to 6 images");
+    //     // }
+    // });
+
+
+});
 
 
 function addFriendToCurrentUser(friendId, friendName) {
@@ -26,12 +71,20 @@ function addFriendToCurrentUser(friendId, friendName) {
             $("#friendsResult").append(userNameDiv);
 
             $("#addedFriendCongrats").fadeOut(5000, function () { emptyFriendsSerachResult(); });
+
+            updateWall();
         }
 
     });
+}
 
+function togglePrivacy(postId) {
+    togglePrivacyPath = "/PHPFiles/wallFeedController.php";
+    paramsToBack = { function: "togglePostPrivate", postId: postId };
 
-
+    $.post(togglePrivacyPath, paramsToBack, function (data) {
+        updateWall();
+    });
 }
 
 
@@ -47,14 +100,12 @@ function logOut() {
 }
 
 function like(postId) {
-    imageSelectorXpath = (".likeBtn.like_").concat(postId, " > .likeImg");
-    image = $(imageSelectorXpath);
-    imageSrc = image.attr("src");
 
-    if (imageSrc.indexOf("liked") >= 0)   //unlike
-        image.attr("src", "/pics/like.png");
-    else    //like
-        image.attr("src", "/pics/liked.png");
+    likeTogglePath = "/PHPFiles/wallFeedController.php";
+    paramsToBack = { function: "toggleLikeForPost", postId: postId };
+    $.post(likeTogglePath, paramsToBack, function (data) {
+        updateWall();
+    });
 }
 
 function savePost() {
@@ -91,30 +142,34 @@ function addComment(postId) {
     }
 }
 
-function insertUserNameInSearchResult(userId, userName) {
+function insertUserNameInSearchResult(usersDic) {//userId, userName) {
     // $("#friendsResult").html(data);
     $("#friendsResult").empty();
-    var userNameDiv = document.createElement('div');
-    userNameDiv.setAttribute('class', "userName u_" + userId);
-    userNameDiv.setAttribute('onclick', "addFriendToCurrentUser(" + userId + ", \"" + userName + "\");");
-    userNameDiv.innerHTML = userName;
-    $("#friendsResult").append(userNameDiv);
+    for (userId in usersDic) {
+        var userName = usersDic[userId];
+        var userNameDiv = document.createElement('div');
+        userNameDiv.setAttribute('class', "userName u_" + userId);
+        userNameDiv.setAttribute('onclick', "addFriendToCurrentUser(" + userId + ", \"" + userName + "\");");
+        userNameDiv.innerHTML = userName;
+        $("#friendsResult").append(userNameDiv);
+    }
 
 
 }
 
 function emptyFriendsSerachResult() {
-    // $("#searchBar > input").val("");
+    $("#searchBar > input").val("");
     $("#friendsResult").empty();
 }
 
-//remove friends search result
-$(document).click(function(event) { 
+//remove friends search result on mouse click
+$(document).click(function (event) {
+    // event.stopPropagation();
     $target = $(event.target);
-    if(!$target.closest('#friendsResult').length || !$target.is(('#friendsResult')))
+    if (!$target.closest('div#searchBar').length || !$target.is('div#searchBar'))
         emptyFriendsSerachResult();
 
-  });
+});
 
 function searchFriend(stringToSearch) {
     searchFriendPath = "/PHPFiles/wallFeedController.php";
@@ -123,24 +178,50 @@ function searchFriend(stringToSearch) {
         paramsToBack = { function: "searchUser", stringToSearch: stringToSearch };
         $.post(searchFriendPath, paramsToBack, function (data) {
             data = JSON.parse(JSON.stringify(data));
-            if (data && data !== "false") {
-
-                for (var key in data) {
-                    insertUserNameInSearchResult(key, data[key]);
-                    console.log(data[key]);
-                }
-            }
+            if (data && data !== "false")
+                insertUserNameInSearchResult(data);
             else
                 emptyFriendsSerachResult();
-
 
         }, "json");
     }
     else
         $("#friendsResult").html("");
-
-
-
-
 }
 
+// function addImageToPost(event) {
+//     event.preventDefault();
+//     addImagePath = "/PHPFiles/wallFeedController.php";
+//     form = $(".addImageFrom");
+//     formData = new FormData(form);
+
+//     paramsToBack = {function: "tempStoreImage", data: formData};
+//     $.post(addImagePath, paramsToBack, function (data) {
+//         console.log(data);
+//     });
+
+//     return false;
+// }
+
+function enlargeImage(image) {
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+
+    modal.style.display = "block";
+    console.log(this.src);
+
+    modalImg.src = image.src;
+    captionText.innerHTML = image.alt;
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+}

@@ -50,6 +50,18 @@ class UsersTable
         return $result;
     }
 
+    public function getAllUserName()
+    {
+        $searchForUser = "SELECT `id`, `fullname` FROM $this->_usersTable ";
+
+        $result = $this->_dbConnection->query($searchForUser);
+        $namesArray = array();
+        while ($row = $result->fetch_array()) {
+            $namesArray[$row['id']] = $row['fullname'];
+        }
+        return $namesArray;
+    }
+
     public function getUserNameBySubstring($substring)
     {
         $searchForUser = "SELECT `id`, `fullname` 
@@ -58,12 +70,10 @@ class UsersTable
                             -- OR `email` LIKE '%$substring%'";
         $result = $this->_dbConnection->query($searchForUser);
         $namesArray = array();
-        while($row = $result->fetch_array())
-        {
+        while ($row = $result->fetch_array()) {
             $namesArray[$row['id']] = $row['fullname'];
         }
         return $namesArray;
-        
     }
 
     public function getUserNameById($id)

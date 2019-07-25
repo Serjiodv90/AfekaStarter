@@ -5,6 +5,9 @@ session_start();
 include_once 'PostsTable.php';
 include_once 'CommentsTable.php';
 include_once 'FriendsTable.php';
+include_once 'LikesTable.php';
+include_once "PostImagesTable.php";
+
 
 $postsDb = new PostsTable();
 $msg = $postsDb->createPostsTable();
@@ -14,6 +17,13 @@ $msg2 = $commentsDb->createCommentsTable();
 
 $friendsDb = new FriendsTable();
 $msg3 = $friendsDb->createFriendsTable();
+
+$likesDb = new LikesTable();
+$msg4 = $likesDb->createLikesTable();
+
+$imagesDb = new PostImagesTable();
+$img5 = $imagesDb->createImagesTable();
+
 ob_clean();
 
 
@@ -27,10 +37,12 @@ ob_clean();
 	<link rel="shortcut icon" type="image/png" href="/pics/facephoto.jpg" />
 	<link rel="stylesheet" type="text/css" href="/StyleCss/styling.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="/JS/wallPageScript.js"></script>
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
+	<script src="/JS/wallPageScript.js"></script>
 
 </head>
 
@@ -59,33 +71,37 @@ ob_clean();
 		</div>
 
 		<div id="friendsResult">
-			<!-- <div class="userName">
-				Hadar Pur
-			</div> -->
 		</div>
 	</div>
 
 
 	<div id="wall">
 		<div id="statusField" class="postContainer">
-			<div class="statusFieldHead">
-				Share your thoughts:
-			</div>
-			<div class="postTextArea">
-				<textarea id="userPostTA" class="userStatusTA" placeholder="What's on your mind, <?php echo ($_SESSION["name"]); ?>?"></textarea>
-			</div>
-
-
-			<div class="postConrollers">
-				<button class="button addPicBtn" type="button" name="addPictureBtn" value="Add picture">Add picture</button>
-				<div id="privacyTgl">
-					<label style="margin: 0px 10px;">Go private:</label>
-					<input class="tgl tgl-flip" id="cb5" type="checkbox" />
-					<label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
+			<form class="addImageFrom" action="#" method="post" enctype="multipart/form-data">
+				<div class="statusFieldHead">
+					Share your thoughts:
 				</div>
-				<button class="button" type="button" name="publishPostBtn" value="Publish post" onclick="savePost(this);">Publish post</button>
+				<div class="postTextArea">
+					<textarea name="postContent" id="userPostTA" class="userStatusTA" placeholder="What's on your mind, <?php echo ($_SESSION["name"]); ?>?"></textarea>
+				</div>
 
-			</div>
+
+				<div class="postConrollers">
+					<button class="button addPicBtn" type="button" name="addPictureBtn" value="Add picture">Add picture</button>
+					<input id="uploadImage" name="postImage[]" type="file" accept="image/*" multiple>
+
+					<div id="privacyTgl">
+						<label style="margin: 0px 10px;">Go private:</label>
+						<input name="privacyCheckbox" class="tgl tgl-flip" id="cb5" type="checkbox" />
+						<label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
+					</div>
+					<button class="button" type="submit" name="publishPostBtn" value="Publish post">Publish post</button>
+
+
+				</div>
+
+			</form>
+
 
 		</div>
 
@@ -103,6 +119,15 @@ ob_clean();
 
 				<div class="postTextArea">
 					<div class="userStatusTA postContent">new Post hAHa</div>
+					<div class="postImage">
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
+
+					</div>
 				</div>
 
 				<div class="postConrollers">
@@ -143,6 +168,11 @@ ob_clean();
 	</div>
 
 
+	<div id="myModal" class="modal">
+		<span class="close">&times;</span>
+		<img class="modal-content" id="img01">
+		<div id="caption"></div>
+	</div>
 </body>
 
 </html>
