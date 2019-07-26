@@ -31,7 +31,7 @@ div.photobook {
     background: linear-gradient(#ffcc80 5%, #ff9900 100%);
     letter-spacing: 1px;
     cursor: pointer;
-
+    outline: none;
 }
 
 .button:hover{
@@ -263,10 +263,8 @@ body,html{
 #wall::-webkit-scrollbar { width: 0 !important }
 
 #statusField{
-    display: inherit;
-    background-color: aliceblue;
-    min-height: 100px;
-
+    display: flex;
+    background-color: aliceblue;        
 }
 
 .postTextArea{
@@ -275,6 +273,8 @@ body,html{
     align-self: center;
     padding-bottom: 5px;
     border-bottom: ridge;
+    flex-direction: column;
+
 }
 
 .userStatusTA{
@@ -502,7 +502,8 @@ textarea{
 }
 
 .addImageFrom{
-    display: contents;
+    display: flex;
+    flex-direction: column;
 }
 
 .postImage{
@@ -513,6 +514,8 @@ textarea{
     flex-wrap: wrap;
 
 }
+
+
 
 .postImage img{
     display: flex;
@@ -526,11 +529,129 @@ textarea{
 }
 
 .postImage img:hover {
-    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transform: scale(1.1); 
+}
+
+
+.postComments{
+    max-height: 210px;
+    overflow-y: auto;
+}
+
+.postInsertImage{
+    background-color: black;
+    border-radius: 10px;
+    margin: 10px 10px 10px 0px;
+    max-width: 100px;
+    max-height: 65px;
+}
+
+#postImagePreview{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 5px 0px 5px 0px;
+    flex-wrap: wrap;
+}
+
+#postImagePreview img{
+    display: flex;
+    justify-self: flex-start;
+    margin: 0px;
+    border-radius: 10px;
+    max-width: 100px;
+    height: fit-content;
+    max-height: 65px;
+    cursor: pointer;
+}
+
+/* .postImagePreview:hover > .closablePostImage:hover{
+    transform: scale(2.0); 
+    opacity: 0.2;
+}
+
+.closablePostImage:hover {
+    transform: scale(1.0); 
+    opacity: 0.2;
+}
+
+.closablePostImage:hover + .icon {
+    opacity: 1;
+    
+} */
+
+
+
+/*              comments scroll bar                */
+/***************************************************/
+
+/* width */
+.postComments::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  .postComments::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px white; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  .postComments::-webkit-scrollbar-thumb {
+    background: #7b80ff; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .postComments::-webkit-scrollbar-thumb:hover {
+    background: black; 
   }
 
 
+/*                  POST IMAGE - X ICON         */
+/***********************************************/
 
+  .postImageOverlay {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    width: 65px;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: red;
+  }
+ 
+  
+  .icon {
+    color: white;
+    font-size: 30px;
+    transform: translate(0%, -155%);
+    text-align: center;
+    opacity: 0;
+  }
+
+  .postInsertImage:hover > img{
+    transform: scale(1.0); 
+    opacity: 0.2;
+}
+    
+.postInsertImage:hover > .icon{
+    opacity: 1;
+}
+
+
+
+  .postInsertImage:hover > .icon:hover {
+    color: red;
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  
+  
+  
 /******                  TOGGLE                   ******/
 /*copied from: https://codepen.io/mallendeo/pen/eLIiG  */
 /*******************************************************/

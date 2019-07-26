@@ -8,11 +8,30 @@ updateWall = () => {
         });
 };
 
-function cleanPostArea() {
+imageIsLoaded = (img) => {
+    console.log(img);
+    var postInsertImageDiv = document.createElement('div');
+    postInsertImageDiv.setAttribute('class', "postInsertImage");
+    var postImage = document.createElement('img');
+    postImage.setAttribute('class', "closablePostImage");
+    postImage.setAttribute('src', img.target.result);
+    postImage.setAttribute('onclick', "enlargeImage(this);");
+    postInsertImageDiv.append(postImage);
+    var closeIcon = document.createElement('i');
+    closeIcon.setAttribute('class', "icon fa fa-close");
+    closeIcon.setAttribute('onclick', "deleteImageFromPost(" + postImage + ");");
+    postInsertImageDiv.append(closeIcon);
+
+    
+    $("#postImagePreview").append(postInsertImageDiv);
+};
+
+cleanPostArea = () => {
     $("#cb5").prop('checked', false); // Unchecks it
     $("#userPostTA").val("");
     $("#uploadImage").val("");
-}
+    $("#postImage").empty();
+};
 
 $(document).ready(function (event) {
 
@@ -43,18 +62,43 @@ $(document).ready(function (event) {
     });
 
 
-    // $("#uploadImage").change(function (e) {
-    //     console.log(this.files);
-    //     var numOfImages = $("#uploadImage").get(0).files.length;
-    //     // if (numOfImages > 6) {
-    //     //     $("#uploadImage").val("");  //empty the chosen images
-    //     //     alert("you can upload up to 6 images");
-    //     // }
-    // });
+    $("#uploadImage").change(function (e) {
+        console.log(this.files);
+        var numOfImages = $("#uploadImage").get(0).files.length;
 
+        // $("#message").empty(); // To remove the previous error message
+        var files = $("#uploadImage").get(0).files;
+        // var file = this.files[0];
 
+        for (var i = 0; i < numOfImages; i++) {
+            var img = files[i];
+
+            var imageType = img.type;
+            var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+
+            if (!match.includes(imageType)) {
+                // $('#previewing').attr('src', 'noimage.png');
+                // $("#message").html("<p id='error'>Please Select A valid Image File</p>" + "<h4>Note</h4>" + "<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
+                // return false;
+                alert("wrong image type: " + imageType);
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(img);
+            }
+        }
+    });
 });
 
+
+
+
+
+
+function addImageButton() {
+    $("#uploadImage").click();
+}
 
 function addFriendToCurrentUser(friendId, friendName) {
     addFriendPath = "/PHPFiles/wallFeedController.php";
@@ -224,4 +268,8 @@ function enlargeImage(image) {
     span.onclick = function () {
         modal.style.display = "none";
     }
+}
+
+function deleteImageFromPost(img) {
+    console.log(img);
 }

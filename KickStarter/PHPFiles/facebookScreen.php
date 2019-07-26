@@ -34,14 +34,16 @@ ob_clean();
 <title>FaceAfeka</title>
 
 <head>
-	<link rel="shortcut icon" type="image/png" href="/pics/facephoto.jpg" />
-	<link rel="stylesheet" type="text/css" href="/StyleCss/styling.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
+
+	<link rel="shortcut icon" type="image/png" href="/pics/facephoto.jpg" />
+	<link rel="stylesheet" type="text/css" href="/StyleCss/styling.css">
 	<script src="/JS/wallPageScript.js"></script>
 
 </head>
@@ -83,12 +85,18 @@ ob_clean();
 				</div>
 				<div class="postTextArea">
 					<textarea name="postContent" id="userPostTA" class="userStatusTA" placeholder="What's on your mind, <?php echo ($_SESSION["name"]); ?>?"></textarea>
+					<div id="postImagePreview" class="postImagePreview">
+						<!-- <div class="postInsertImage">
+							<img class="closablePostImage" src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
+							<i class = "icon fa fa-close"></i>
+						</div> -->
+					</div>
 				</div>
 
 
 				<div class="postConrollers">
-					<button class="button addPicBtn" type="button" name="addPictureBtn" value="Add picture">Add picture</button>
-					<input id="uploadImage" name="postImage[]" type="file" accept="image/*" multiple>
+					<button class="button addPicBtn" type="button" name="addPictureBtn" value="Add picture" onclick="addImageButton();">Add picture</button>
+					<input id="uploadImage" name="postImage[]" type="file" accept="image/*" multiple hidden>
 
 					<div id="privacyTgl">
 						<label style="margin: 0px 10px;">Go private:</label>
