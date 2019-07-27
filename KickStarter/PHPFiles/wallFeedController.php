@@ -9,6 +9,7 @@ include_once 'FriendsTable.php';
 include_once 'LikesTable.php';
 include_once 'PostImagesTable.php';
 include_once "sessionManager.php";
+include_once 'NotificationsTable.php';
 
 
 $postTableConn = new PostsTable();
@@ -41,13 +42,70 @@ if (isset($_POST["function"]) and $_POST["function"] != "") {
         case 'tempStoreImage':
             tempStoreImage();
             break;
+        case 'getAllFriendsOfCurrentUser':
+            getAllFriendsOfCurrentUser();
+            break;
+        case 'inviteFriendToPlayFlappyBird':
+            inviteFriendToPlayFlappyBird();
+            break;
+        case 'getAllNotificationForCurrentUser':
+            getAllNotificationForCurrentUser();
+            break;
+        case 'removeNotification':
+            removeNotification();
+            break;
     }
 }
 
-// function getCurrentUserId()
-// {
-//     return $_SESSION["id"];
-// }
+
+function inviteFriendToPlayFlappyBird()
+{
+    $notificationsConn = new NotificationsTable();
+    $notificationDesc = "play flappy bird";
+    $friendsId = $_POST["friendId"];
+    $res = $notificationsConn->addNotificationFromCurrentUserToFriendById($friendsId, $notificationDesc);
+
+    if ($res === TRUE)
+        echo ("ok");
+    else
+        echo ("DB Error");
+}
+
+function getAllNotificationForCurrentUser()
+{
+
+    $notificationsConn = new NotificationsTable();
+    $usersTableConn = new UsersTable();
+    $notifications = $notificationsConn->getAllNotificationsForCurrentUser();
+    $notificationsArray = array();
+
+    if ($notifications && $notifications->num_rows > 0) {
+        while ($row = $notifications->fetch_array()) {
+            $userName = $usersTableConn->getUserNameById($row["inviting_user_id"]);
+            $notificationDesc = $row["description"];
+
+            if (strcmp($notificationDesc, "play flappy bird") == 0)
+                $notificationsArray[$row["id"]] = "$userName has invited you to play flappy bird";
+        }
+        echo json_encode($notificationsArray);
+    } else {
+        echo json_encode("empty");
+    }
+}
+
+function removeNotification() {
+    echo ("removing notification: " . $_POST["notificationId"]);
+    $notificationsConn = new NotificationsTable();
+    $notificationsConn->removeNotificationById($_POST["notificationId"]);
+
+}
+
+function getAllFriendsOfCurrentUser()
+{
+    $usersTableConn = new UsersTable();
+    $friendsArray = $usersTableConn->getAllUserFriendsByUserId(getCurrentUserId());
+    echo json_encode($friendsArray);
+}
 
 function insertPost()
 {
@@ -175,7 +233,7 @@ function getAllPostsOfUser()
 
     $result = $postTableConn->getAllpostsOfUserByDate(getCurrentUserId());
     $numOfRows = $result->num_rows;
-    
+
 
     $dom = new DOMDocument('1.0', "utf-8");
     $count = 0;

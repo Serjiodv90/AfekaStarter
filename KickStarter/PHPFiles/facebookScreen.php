@@ -6,7 +6,8 @@ include_once 'PostsTable.php';
 include_once 'CommentsTable.php';
 include_once 'FriendsTable.php';
 include_once 'LikesTable.php';
-include_once "PostImagesTable.php";
+include_once 'PostImagesTable.php';
+include_once 'NotificationsTable.php';
 
 
 $postsDb = new PostsTable();
@@ -22,7 +23,10 @@ $likesDb = new LikesTable();
 $msg4 = $likesDb->createLikesTable();
 
 $imagesDb = new PostImagesTable();
-$img5 = $imagesDb->createImagesTable();
+$msg5 = $imagesDb->createImagesTable();
+
+$notificationsDb = new NotificationsTable();
+$msg6 = $notificationsDb->createNotificationsTable();
 
 ob_clean();
 
@@ -73,6 +77,18 @@ ob_clean();
 		</div>
 
 		<div id="friendsResult">
+		</div>
+	</div>
+
+	<div id="flappyBird">
+		<div id="flappyBirdHeader">
+			<div id="flappyBirdNotification">
+			</div>
+			<p> Play Flappy Bird online, with your friends!!!</p>
+			<button class="button" type="button" name="inviteFriends" value="Invite a friend" onclick="showAllFriends();">Invite a friend</button>
+		</div>
+
+		<div id="AllfriendsResult">
 		</div>
 	</div>
 
@@ -174,6 +190,8 @@ ob_clean();
 		</div>
 
 	</div>
+
+
 
 
 	<div id="myModal" class="modal">

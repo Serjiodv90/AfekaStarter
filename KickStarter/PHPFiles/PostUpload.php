@@ -9,7 +9,7 @@ include_once "sessionManager.php";
 $postImagesFolder = "/pics/postImages/";
 
 $isPrivate;
-if (!isset($_POST["privacyCheckbox"]))
+if ($_POST["privacyCheckbox"] == 0)
     $isPrivate = 0;
 else
     $isPrivate = 1;

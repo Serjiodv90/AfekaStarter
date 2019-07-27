@@ -444,6 +444,19 @@ textarea{
     align-self: flex-start;
 }
 
+#flappyBird{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    width: 270px;
+    margin: 5px;
+    border-style: inset;
+    border-radius: 10px;
+    float: right;
+}
+
 #friendSearch{
     padding: 10px;
     display: flex;
@@ -565,6 +578,47 @@ textarea{
     cursor: pointer;
 }
 
+#flappyBirdHeader{
+    padding-bottom: 25px;
+    padding-top: 10px;
+    width: 100%;
+    min-height: 135px;
+    border-bottom-width: 2px;
+    border-bottom-style: ridge;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#flappyBirdHeader button{
+    width: 150px;
+    margin: auto;
+}
+
+.flappyBirdNotification{
+    display: flex;
+    background-color: #ff6262;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 5px auto;
+    cursor: pointer;
+}
+
+.flappyBirdNotification p{
+    margin: 10px 0px 10px 0px;
+}
+
+#cleanNotificationsBtn {
+    margin: 0px;
+    color: blue;
+    cursor: pointer;
+}
+
+#cleanNotificationsBtn:hover {
+    color: slateblue;
+    text-decoration: underline;
+
+}
 /* .postImagePreview:hover > .closablePostImage:hover{
     transform: scale(2.0); 
     opacity: 0.2;

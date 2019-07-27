@@ -8,6 +8,7 @@ class UsersTable
 {
 
     private $_usersTable = USERS_TABLE;
+    private $_friendsTable = FRIENDS_CONNECTION_TABLE;
     private $_dbConnection;
 
 
@@ -41,6 +42,20 @@ class UsersTable
             // return FALSE;
             echo ("false");
         }
+    }
+
+    public function getAllUserFriendsByUserId($userId) {
+        $friendsQuery = "SELECT u.id, u.fullname 
+                         FROM `myusers` u
+                         LEFT JOIN `friends` f
+                         ON f.user_id = $userId
+                         WHERE u.id = f.friend_id";
+        $result = $this->_dbConnection->query($friendsQuery);
+        $namesArray = array();
+        while ($row = $result->fetch_array()) {
+            $namesArray[$row['id']] = $row['fullname'];
+        }
+        return $namesArray;
     }
 
     public function getUserByEmail($email)
