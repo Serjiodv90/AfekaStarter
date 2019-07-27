@@ -27,7 +27,8 @@ TrapManagement/Logs/
 *.tif
 *.gif
 FluppyBird/
-
+*.zip
+*.rar
 
 # External tool builders
 .externalToolBuilders/

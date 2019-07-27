@@ -80,8 +80,12 @@ $(document).ready(function (event) {
             else
                 formData.append('privacyCheckbox', 0);
 
-            for (var i = 0; i < imagesToUploadArray.length; i++) {
-                formData.append('postImage[]', imagesToUploadArray[i]);
+            if (imagesToUploadArray.length <= 0)
+                formData.append('postImage[]', "");
+            else {
+                for (var i = 0; i < imagesToUploadArray.length; i++) {
+                    formData.append('postImage[]', imagesToUploadArray[i]);
+                }
             }
 
             $.ajax({
@@ -287,7 +291,7 @@ checkIfThereAreNotificationsDisplayed = () => {
 }
 
 deleteAllNotifications = () => {
-        
+
     $(".flappyBirdNotification").each(function () {
         var notificationIdNum = $(this).attr('class').match('\\d+')[0];
         deleteNotificationFromDb(notificationIdNum);
@@ -325,7 +329,7 @@ checkForNotifications = () => {
 
 
 
-function deleteNotificationFromDb(notificationId){
+function deleteNotificationFromDb(notificationId) {
     removeNotificationPath = "/PHPFiles/wallFeedController.php";
     paramsToBack = { function: "removeNotification", notificationId: notificationId };
 
@@ -337,11 +341,11 @@ function deleteNotificationFromDb(notificationId){
 function notificationClicked(notificationId, isRedirect) {
     $(".fbn_" + notificationId).remove();
     deleteNotificationFromDb(notificationId);
-    if(checkIfThereAreNotificationsDisplayed() <= 0)
+    if (checkIfThereAreNotificationsDisplayed() <= 0)
         $("#cleanNotificationsBtn").remove();
 
 
-    if(!isRedirect || isRedirect.localeCompare("true"))
+    if (!isRedirect || isRedirect.localeCompare("true"))
         redirectToFlappyBird();
 
 }
