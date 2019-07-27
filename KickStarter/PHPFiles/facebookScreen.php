@@ -102,10 +102,6 @@ ob_clean();
 				<div class="postTextArea">
 					<textarea name="postContent" id="userPostTA" class="userStatusTA" placeholder="What's on your mind, <?php echo ($_SESSION["name"]); ?>?"></textarea>
 					<div id="postImagePreview" class="postImagePreview">
-						<!-- <div class="postInsertImage">
-							<img class="closablePostImage" src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
-							<i class = "icon fa fa-close"></i>
-						</div> -->
 					</div>
 				</div>
 
@@ -130,9 +126,20 @@ ob_clean();
 		</div>
 
 		<div id="posts">
+
+
+
+
+
 			<!-- <div class="singlePost">
 				<div class="postHeader">
-					<div class="statusFieldHead"> <?php echo ($_SESSION["name"]); ?>
+					<div class="profile">
+						<div class="profileImage">
+							<img src="/pics/default_profile.jpg" />
+						</div>
+
+						<div class="statusFieldHead"> <?php echo ($_SESSION["name"]); ?>
+						</div>
 					</div>
 
 					<div class="privacyCheckBox">
@@ -144,12 +151,12 @@ ob_clean();
 				<div class="postTextArea">
 					<div class="userStatusTA postContent">new Post hAHa</div>
 					<div class="postImage">
-						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
-						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
-						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
-						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
-						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
-						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);"/>
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
+						<img src="/pics/postImages/221_images.jpg" onclick="enlargeImage(this);" />
 
 					</div>
 				</div>
@@ -173,7 +180,12 @@ ob_clean();
 
 					<div class="postComments">
 						<div class="singleComment">
-							<div class="commenterName">Serjio said:
+							<div class="profile">
+								<div class="profileImage">
+									<img src="/pics/default_profile.jpg" />
+								</div>
+								<div class="commenterName">Serjio said:
+								</div>
 							</div>
 
 							<div class="commentContent">nice post hadar.
@@ -182,10 +194,13 @@ ob_clean();
 					</div>
 
 				</div>
-
-
-
 			</div> -->
+
+
+
+
+
+
 
 		</div>
 

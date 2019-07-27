@@ -26,11 +26,12 @@ class UsersTable
         }
 
         // sql to create table for users
-        $sql = "CREATE TABLE $this->_usersTable (
+        $sql = "CREATE TABLE IF NOT EXISTS $this->_usersTable (
             `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
             `fullname` VARCHAR(30) NOT NULL,
             `email` VARCHAR(50),
             `pass` VARCHAR(50) NOT NULL,
+            `profile_image` VARCHAR(255) DEFAULT '', 
             `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
 
@@ -42,6 +43,16 @@ class UsersTable
             // return FALSE;
             echo ("false");
         }
+    }
+
+    public function getProfileImagePathByUserId($userId){
+        $profileImageQuery = "SELECT `profile_image` FROM $this->_usersTable WHERE `id` = '$userId'";
+        $result = $this->_dbConnection->query($profileImageQuery);
+        if($row = $result->fetch_array())
+            return $row["profile_image"];
+        else
+            return "";
+
     }
 
     public function getAllUserFriendsByUserId($userId) {
@@ -101,7 +112,7 @@ class UsersTable
             return 0;
     }
 
-    public function insertUser($email, $userName, $password)
+    public function insertUser($email, $userName, $password, $profileImagePath)
     {
         $password = sha1($password); // Password Encryption.
         $returnMsg = "";
@@ -115,7 +126,8 @@ class UsersTable
 
             if ($numOfRows == 0) {   // if the user doesn't registered already
 
-                $insertQuery = "INSERT INTO $this->_usersTable (fullname, email, pass) VALUES ('$userName', '$email', '$password')";
+                $insertQuery = "INSERT INTO $this->_usersTable (fullname, email, pass, profile_image) 
+                                VALUES ('$userName', '$email', '$password', '$profileImagePath')";
                 $query = $this->_dbConnection->query($insertQuery); // Insert query
 
                 if ($query === TRUE) {

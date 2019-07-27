@@ -82,7 +82,7 @@
  	<div class="container">
  		<div class="photobook">&nbsp;</div>
  		<div class="main">
- 			<form class="form" method="post" onsubmit="return validateReg()" action="/PHPFiles/registration.php">
+ 			<form class="form" method="post" onsubmit="return validateReg()" action="/PHPFiles/registration.php" enctype="multipart/form-data">
  				<h2>Register to FaceAfeka!</h2>
  				<label>Name : </label>
  				<input class="regTextBoxes" type="text" name="name" id="name">
@@ -92,6 +92,8 @@
  				<input class="regTextBoxes" type="password" name="password" id="password">
  				<label>Confirm Password :</label>
  				<input class="regTextBoxes" type="password" name="cpassword" id="cpassword">
+ 				<button class="button addPicBtn" type="button" name="addPictureBtn" value="Add picture" onclick="addImageButton();">Add profile picture</button>
+ 				<input id="uploadImage" name="profileImage" type="file" accept="image/*" hidden>
  				<input class="button" id="register" type="submit" name="register" value="Register">
  			</form>
  		</div>

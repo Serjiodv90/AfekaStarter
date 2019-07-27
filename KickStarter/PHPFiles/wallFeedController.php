@@ -254,11 +254,33 @@ function getAllPostsOfUser()
             $PostHeaderDivClass->value = "postHeader";
             $PostHeaderDiv->appendChild($PostHeaderDivClass);
 
+            $profileDiv = $dom->createElement('div');
+            $profileDivClass = $dom->createAttribute('class');
+            $profileDivClass->value = "profile";
+            $profileDiv->appendChild($profileDivClass);
+            $profileImageDiv = $dom->createElement('div');
+            $profileImageDivClass = $dom->createAttribute('class');
+            $profileImageDivClass->value = "profileImage";
+            $profileImageDiv->appendChild($profileImageDivClass);
+            $profileImageElement = $dom->createElement('img');
+            $profileImageElementSrc = $dom->createAttribute('src');
+            $imagePath = $usersTableConn->getProfileImagePathByUserId($row["user_id"]);
+            if($imagePath && $imagePath !== "")
+                $profileImageElementSrc->value = $imagePath;
+            else 
+                $profileImageElementSrc->value = "/pics/default_profile.jpg";
+            
+            $profileImageElement->appendChild($profileImageElementSrc);
+            $profileImageDiv->appendChild($profileImageElement);
+            $profileDiv->appendChild($profileImageDiv);
+            
             $statusDiv = $dom->createElement('div', $userName);
             $statusDivClass = $dom->createAttribute('class');
             $statusDivClass->value = "statusFieldHead";
             $statusDiv->appendChild($statusDivClass);
-            $PostHeaderDiv->appendChild($statusDiv);
+            $profileDiv->appendChild($statusDiv);
+
+            $PostHeaderDiv->appendChild($profileDiv);
             //display checkbox only if the current user is the post owner
             if (strcmp($row["user_id"], getCurrentUserId()) === 0) {
                 //privacy checkbox div
@@ -431,11 +453,34 @@ function getAllPostsOfUser()
                     $singleCommentDivClass = $dom->createAttribute('class');
                     $singleCommentDivClass->value = "singleComment";
                     $singleCommentDiv->appendChild($singleCommentDivClass);
+
+                    $profileDiv = $dom->createElement('div');
+                    $profileDivClass = $dom->createAttribute('class');
+                    $profileDivClass->value = "profile";
+                    $profileDiv->appendChild($profileDivClass);
+                    $profileImageDiv = $dom->createElement('div');
+                    $profileImageDivClass = $dom->createAttribute('class');
+                    $profileImageDivClass->value = "profileImage";
+                    $profileImageDiv->appendChild($profileImageDivClass);
+                    $profileImageElement = $dom->createElement('img');
+                    $profileImageElementSrc = $dom->createAttribute('src');
+                    $imagePath = $usersTableConn->getProfileImagePathByUserId($row["user_id"]);
+                    if($imagePath && $imagePath !== "")
+                        $profileImageElementSrc->value = $imagePath;
+                    else 
+                        $profileImageElementSrc->value = "/pics/default_profile.jpg";
+                    
+                    $profileImageElement->appendChild($profileImageElementSrc);
+                    $profileImageDiv->appendChild($profileImageElement);
+                    $profileDiv->appendChild($profileImageDiv);
+
                     $commenterNameDiv = $dom->createElement('div', $commenterName . " said:");
                     $commenterNameDivClass = $dom->createAttribute('class');
                     $commenterNameDivClass->value = "commenterName";
                     $commenterNameDiv->appendChild($commenterNameDivClass);
-                    $singleCommentDiv->appendChild($commenterNameDiv);
+                    $profileDiv->appendChild($commenterNameDiv);
+                    $singleCommentDiv->appendChild($profileDiv);
+                    
                     $commentContentDiv = $dom->createElement('div', $commentContent);
                     $commentContentDivClass = $dom->createAttribute('class');
                     $commentContentDivClass->value = "commentContent";

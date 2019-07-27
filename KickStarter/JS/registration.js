@@ -9,17 +9,25 @@ function validateReg(){
 
     if (name == '' || email == '' || password == '' || cpassword == '') {
         alert("Please fill all fields!!!!!!");
+        return false;
     }
     else if ((password.length) < 8) {
         alert("Password should atleast 8 character in length!!!!!!");
+        return false;
     }
     else if (!(password).match(cpassword)) {
         alert("Your passwords don't match. Try again?");
+        return false;
     }
     else if(!(emailReg.test(email))) {
         alert("Wrong email address");
+        return false;
     }
 
     return true;
+}
+
+function addImageButton() {
+    $("#uploadImage").click();
 }
 

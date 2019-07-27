@@ -306,8 +306,10 @@ textarea{
 }
 
 .statusFieldHead{
+    display: flex;
+    justify-self: self-start;
     align-self: flex-start;
-    margin: 10px 44px;
+    margin: 10px 55px;
     border-bottom-style: ridge;
 }
 
@@ -435,12 +437,12 @@ textarea{
 
 .commenterName{
     align-self: flex-start;
-    padding: 5px 0px 5px 10px;
+    padding: 11px 0px 5px 5px;
     font-weight: bold;
 }
 
 .commentContent{
-    padding: 0px 0px 10px 20px;
+    padding: 0px 0px 10px 50px;
     align-self: flex-start;
 }
 
@@ -497,11 +499,6 @@ textarea{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.statusFieldHead{
-    display: flex;
-    justify-self: self-start;
 }
 
 .privacyCheckBox{
@@ -618,6 +615,30 @@ textarea{
     color: slateblue;
     text-decoration: underline;
 
+}
+
+.profileImage{
+    width: 40px;
+    display: flex;
+    height: 40px;
+}
+
+.profileImage img {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+}
+
+.profile{
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+
+}
+
+.profile .statusFieldHead{
+    margin-left: 5px;
 }
 /* .postImagePreview:hover > .closablePostImage:hover{
     transform: scale(2.0); 
