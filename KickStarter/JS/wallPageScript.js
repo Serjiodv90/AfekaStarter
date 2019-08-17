@@ -64,7 +64,9 @@ cleanPostArea = () => {
 
 $(document).ready(function (event) {
 
-    updateWall();
+    // updateWall();
+
+    setInterval(updateWall, 60*1000);
 
     $(".addImageFrom").on('submit', function (event) {
         event.preventDefault();

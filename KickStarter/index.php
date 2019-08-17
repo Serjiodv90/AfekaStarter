@@ -97,12 +97,29 @@
  				<input class="button" id="register" type="submit" name="register" value="Register">
  			</form>
  		</div>
- 	</div>
+	 </div>
+	 
+
+	 <div class = "mainDiv">
+	
+	
+	<div class = "buttons">
+		<div class="zero">
+			<button id-"zeroBtn" name = "zeroBtn" value = "zero">ZERO</button>
+		</div>
+		
+		<div class = "add2">
+			<button id-"add2" name = "add2Btn" value = "+2"> +2 </button>
+		</div>
+	</div>
+	
+	<div class = "inputs">
+		<input type="text" id="value">		
+	</div>
+	
+</div>
+
 
  </body>
 
  </html>
- <?php
-	// }
-	//
-	?>

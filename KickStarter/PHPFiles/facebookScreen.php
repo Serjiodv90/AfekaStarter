@@ -56,7 +56,9 @@ ob_clean();
 
 	<div class="mainHeader">
 		<div class="logoName">
-			<p id="logo"> <img src="/pics/facephoto.jpg" height="30" alt="London"> FaceAfeka</p>
+			<p id="logo"> 
+				<img src="/pics/facephoto.jpg"  height="30" alt="FaceAfeka" onclick="updateWall();"> FaceAfeka
+			</p>
 		</div>
 
 		<div class="loginDisp">

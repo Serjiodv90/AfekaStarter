@@ -120,6 +120,10 @@ div.photobook {
     letter-spacing: 2px;
 }
 
+#logo img{
+    cursor: pointer;
+}
+
 img {
     vertical-align: middle;
 
